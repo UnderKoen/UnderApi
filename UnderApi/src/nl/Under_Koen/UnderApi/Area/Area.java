@@ -25,6 +25,9 @@ public class Area {
 	 */
 	public Area (Location spawn, String name) {
 		setName(name);
+		setPlayers(new ArrayList<OfflinePlayer>());
+		Main.plugin.getCustomConfig("AreaConfig").set(name, "hoi");
+		Main.plugin.saveCustomConfig("AreaConfig");
 		setSpawn(spawn);
 	}
 	
@@ -34,6 +37,7 @@ public class Area {
 	 */
 	private Area (Location spawn, String name, ArrayList<OfflinePlayer> player) {
 		setName(name);
+		setPlayers(player);
 		setSpawn(spawn);
 	}
 
@@ -54,6 +58,18 @@ public class Area {
 		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Z", Spawn.getBlockZ());
 		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.World", Spawn.getWorld().getName());
 		Main.plugin.saveCustomConfig("AreaConfig");
+		String players = "";
+		for (OfflinePlayer p : Players) {
+			if (players.isEmpty()) {
+				players = players + p.getName();
+			} else {
+				players = players + ", " + p.getName();
+			}
+		}
+		
+		String ding = Name + ": " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
+		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "': ";
+		Bukkit.broadcastMessage(ding);
 	}
 
 	/**
@@ -75,6 +91,24 @@ public class Area {
 	 */
 	public ArrayList<OfflinePlayer> getPlayers() {
 		return Players;
+	}
+	
+	/**
+	 * @param players the players to set
+	 */
+	private void setPlayers(ArrayList<OfflinePlayer> players) {
+		Players = players;
+		PlayersUUID = new ArrayList<String>();
+		if (Players == null || Players.isEmpty()) {
+			Main.plugin.getCustomConfig("AreaConfig").set(Name +".Players", PlayersUUID);
+			Main.plugin.saveCustomConfig("AreaConfig");
+			return;
+		}
+		for (OfflinePlayer p:Players) {
+			PlayersUUID.add(p.getUniqueId().toString());
+		}
+		Main.plugin.getCustomConfig("AreaConfig").set(Name +".Players", PlayersUUID);
+		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 
 	/**
@@ -129,7 +163,10 @@ public class Area {
 			}
 			return false;
 	}
-	 
+	
+	/**
+	 * @return Area Name + ": " + Location + ": " + Players
+	 */
 	public String toString() {
 		String players = "";
 		for (OfflinePlayer p : Players) {
@@ -141,7 +178,7 @@ public class Area {
 		}
 		
 		return Name + ": " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
-		Spawn.getBlockZ() + ", " + Spawn.getWorld().getName() + ": ";
+		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "': ";
 	}
 	
 	/**
