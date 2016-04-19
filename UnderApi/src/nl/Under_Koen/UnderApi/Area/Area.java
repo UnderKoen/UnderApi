@@ -14,6 +14,11 @@ public class Area {
 	private ArrayList<OfflinePlayer> Players;
 	private ArrayList<String> PlayersUUID;
 	
+	
+	/**
+	 * @param spawn the location of the spawn
+	 * @param name the name of the area
+	 */
 	public Area (Location spawn, String name) {
 		setName(name);
 		setSpawn(spawn);
