@@ -129,7 +129,25 @@ public class Area {
 			}
 			return false;
 	}
+	 
+	public String toString() {
+		String players = "";
+		for (OfflinePlayer p : Players) {
+			if (players.isEmpty()) {
+				players = players + p.getName();
+			} else {
+				players = players + ", " + p.getName();
+			}
+		}
+		
+		return Name + ": " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
+		Spawn.getBlockZ() + ", " + Spawn.getWorld().getName() + ": ";
+	}
 	
+	/**
+	 * @param name name of the area
+	 * @return the area
+	 */
 	public static Area getArea(String name) {
 		String test = Main.plugin.getCustomConfig("AreaConfig").getString(name+"Spawn.X");
 		if (test == "" || test == null || test.isEmpty()) {
