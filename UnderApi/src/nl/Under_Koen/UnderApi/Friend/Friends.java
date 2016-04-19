@@ -18,7 +18,7 @@ public class Friends {
 	/**
 	* @param player the player
 	*/
-	public Friends (Player player) {
+	private Friends (Player player) {
 		setPlayer(player);
 		setFriends(new ArrayList<OfflinePlayer>());
 	}
@@ -27,7 +27,7 @@ public class Friends {
 	 * @param player the player
 	 * @param pfriends the friends
 	 */
-	public Friends (Player player, ArrayList<OfflinePlayer> pfriends) {
+	private Friends (Player player, ArrayList<OfflinePlayer> pfriends) {
 		setPlayer(player);
 		setFriends(pfriends);
 	}
