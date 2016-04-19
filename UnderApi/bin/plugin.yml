@@ -3,3 +3,4 @@ main: nl.Under_Koen.UnderApi.Main
 version: alpha.0.2
 commands:
   test:
+  test2:
