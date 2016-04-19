@@ -125,7 +125,7 @@ public class Friends {
 	}
 	
 	/**
-	 * @return Player name + ": " + friends
+	 * @return Player name + "; " + friends
 	 */
 	public String toString() {
 		String friends = "";
@@ -135,7 +135,7 @@ public class Friends {
 		if (friends.length() != 0) {
 			friends = friends.substring(0, friends.length()-2);
 		}
-		return Player.getName()+": "+friends;
+		return Player.getName()+"; "+friends;
 	}
 	
 	/**

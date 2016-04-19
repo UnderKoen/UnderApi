@@ -26,8 +26,6 @@ public class Area {
 	public Area (Location spawn, String name) {
 		setName(name);
 		setPlayers(new ArrayList<OfflinePlayer>());
-		Main.plugin.AreaConfig.getConfig().set(name, "hoi");
-		Main.plugin.AreaConfig.saveConfig();
 		setSpawn(spawn);
 	}
 	
@@ -153,7 +151,7 @@ public class Area {
 	}
 	
 	/**
-	 * @return Area Name + ": " + Location + ": " + Players
+	 * @return Area Name + "; " + Location + "; " + Players
 	 */
 	public String toString() {
 		String players = "";
@@ -165,8 +163,8 @@ public class Area {
 			}
 		}
 		
-		return Name + ": " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
-		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "': ";
+		return Name + "; " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
+		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "'; ";
 	}
 	
 	/**
@@ -174,7 +172,7 @@ public class Area {
 	 * @return the area
 	 */
 	public static Area getArea(String name) {
-		String test = Main.plugin.AreaConfig.getConfig().getString(name+"Spawn.X");
+		String test = Main.plugin.AreaConfig.getConfig().getString(name+".Spawn.X");
 		if (test == "" || test == null || test.isEmpty()) {
 			return null;
 		}
