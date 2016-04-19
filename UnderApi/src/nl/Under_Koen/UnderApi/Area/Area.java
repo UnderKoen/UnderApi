@@ -1,9 +1,13 @@
 package nl.Under_Koen.UnderApi.Area;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import nl.Under_Koen.UnderApi.Main;
@@ -23,6 +27,15 @@ public class Area {
 		setName(name);
 		setSpawn(spawn);
 	}
+	
+	/**
+	 * @param spawn the location of the spawn
+	 * @param name the name of the area
+	 */
+	private Area (Location spawn, String name, ArrayList<OfflinePlayer> player) {
+		setName(name);
+		setSpawn(spawn);
+	}
 
 	/**
 	 * @return the location
@@ -39,7 +52,7 @@ public class Area {
 		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.X", Spawn.getBlockX());
 		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Y", Spawn.getBlockY());
 		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Z", Spawn.getBlockZ());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.World", Spawn.getWorld());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.World", Spawn.getWorld().getName());
 		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 
@@ -115,5 +128,22 @@ public class Area {
 				}
 			}
 			return false;
+	}
+	
+	public static Area getArea(String name) {
+		String test = Main.plugin.getCustomConfig("AreaConfig").getString(name+"Spawn.X");
+		if (test == "" || test == null || test.isEmpty()) {
+			return null;
+		}
+		int X = Main.plugin.getCustomConfig("AreaConfig").getInt(name + ".Spawn.X");
+		int Y = Main.plugin.getCustomConfig("AreaConfig").getInt(name + ".Spawn.Y");
+		int Z = Main.plugin.getCustomConfig("AreaConfig").getInt(name + ".Spawn.Z");
+		World World = Bukkit.getWorld(Main.plugin.getCustomConfig("AreaConfig").getString(name + ".Spawn.World"));
+		List<String> UUIDplayers = Main.plugin.getCustomConfig("AreaConfig").getStringList(name + ".Players");
+		ArrayList<OfflinePlayer> players = new ArrayList<OfflinePlayer>(); 
+		for (String p: UUIDplayers) {
+			players.add(Bukkit.getOfflinePlayer(UUID.fromString(p)));
+		}
+		return new Area(new Location(World, X, Y, Z), name, players);
 	}
 }
