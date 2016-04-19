@@ -26,8 +26,8 @@ public class Area {
 	public Area (Location spawn, String name) {
 		setName(name);
 		setPlayers(new ArrayList<OfflinePlayer>());
-		Main.plugin.getCustomConfig("AreaConfig").set(name, "hoi");
-		Main.plugin.saveCustomConfig("AreaConfig");
+		Main.plugin.AreaConfig.getConfig().set(name, "hoi");
+		Main.plugin.AreaConfig.saveConfig();
 		setSpawn(spawn);
 	}
 	
@@ -53,23 +53,11 @@ public class Area {
 	 */
 	public void setSpawn(Location spawn) {
 		Spawn = spawn;
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.X", Spawn.getBlockX());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Y", Spawn.getBlockY());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Z", Spawn.getBlockZ());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.World", Spawn.getWorld().getName());
-		Main.plugin.saveCustomConfig("AreaConfig");
-		String players = "";
-		for (OfflinePlayer p : Players) {
-			if (players.isEmpty()) {
-				players = players + p.getName();
-			} else {
-				players = players + ", " + p.getName();
-			}
-		}
-		
-		String ding = Name + ": " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
-		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "': ";
-		Bukkit.broadcastMessage(ding);
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Spawn.X", Spawn.getBlockX());
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Spawn.Y", Spawn.getBlockY());
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Spawn.Z", Spawn.getBlockZ());
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Spawn.World", Spawn.getWorld().getName());
+		Main.plugin.AreaConfig.saveConfig();
 	}
 
 	/**
@@ -100,15 +88,15 @@ public class Area {
 		Players = players;
 		PlayersUUID = new ArrayList<String>();
 		if (Players == null || Players.isEmpty()) {
-			Main.plugin.getCustomConfig("AreaConfig").set(Name +".Players", PlayersUUID);
-			Main.plugin.saveCustomConfig("AreaConfig");
+			Main.plugin.AreaConfig.getConfig().set(Name +".Players", PlayersUUID);
+			Main.plugin.AreaConfig.saveConfig();
 			return;
 		}
 		for (OfflinePlayer p:Players) {
 			PlayersUUID.add(p.getUniqueId().toString());
 		}
-		Main.plugin.getCustomConfig("AreaConfig").set(Name +".Players", PlayersUUID);
-		Main.plugin.saveCustomConfig("AreaConfig");
+		Main.plugin.AreaConfig.getConfig().set(Name +".Players", PlayersUUID);
+		Main.plugin.AreaConfig.saveConfig();
 	}
 
 	/**
@@ -117,8 +105,8 @@ public class Area {
 	public void addPlayer(Player players) {
 		Players.add(players);
 		PlayersUUID.add(players.getUniqueId().toString());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
-		Main.plugin.saveCustomConfig("AreaConfig");
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Players", PlayersUUID);
+		Main.plugin.AreaConfig.saveConfig();
 	}
 	
 	/**
@@ -127,8 +115,8 @@ public class Area {
 	public void addPlayer(OfflinePlayer players) {
 		Players.add(players);
 		PlayersUUID.add(players.getUniqueId().toString());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
-		Main.plugin.saveCustomConfig("AreaConfig");
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Players", PlayersUUID);
+		Main.plugin.AreaConfig.saveConfig();
 	}
 	
 	/**
@@ -137,8 +125,8 @@ public class Area {
 	public void removePlayer(Player players) {
 		Players.remove(players);
 		PlayersUUID.remove(players.getUniqueId().toString());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
-		Main.plugin.saveCustomConfig("AreaConfig");
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Players", PlayersUUID);
+		Main.plugin.AreaConfig.saveConfig();
 	}
 	
 	/**
@@ -147,8 +135,8 @@ public class Area {
 	public void removePlayer(OfflinePlayer players) {
 		Players.remove(players);
 		PlayersUUID.remove(players.getUniqueId().toString());
-		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
-		Main.plugin.saveCustomConfig("AreaConfig");
+		Main.plugin.AreaConfig.getConfig().set(Name + ".Players", PlayersUUID);
+		Main.plugin.AreaConfig.saveConfig();
 	}
 	
 	/**
@@ -186,15 +174,15 @@ public class Area {
 	 * @return the area
 	 */
 	public static Area getArea(String name) {
-		String test = Main.plugin.getCustomConfig("AreaConfig").getString(name+"Spawn.X");
+		String test = Main.plugin.AreaConfig.getConfig().getString(name+"Spawn.X");
 		if (test == "" || test == null || test.isEmpty()) {
 			return null;
 		}
-		int X = Main.plugin.getCustomConfig("AreaConfig").getInt(name + ".Spawn.X");
-		int Y = Main.plugin.getCustomConfig("AreaConfig").getInt(name + ".Spawn.Y");
-		int Z = Main.plugin.getCustomConfig("AreaConfig").getInt(name + ".Spawn.Z");
-		World World = Bukkit.getWorld(Main.plugin.getCustomConfig("AreaConfig").getString(name + ".Spawn.World"));
-		List<String> UUIDplayers = Main.plugin.getCustomConfig("AreaConfig").getStringList(name + ".Players");
+		int X = Main.plugin.AreaConfig.getConfig().getInt(name + ".Spawn.X");
+		int Y = Main.plugin.AreaConfig.getConfig().getInt(name + ".Spawn.Y");
+		int Z = Main.plugin.AreaConfig.getConfig().getInt(name + ".Spawn.Z");
+		World World = Bukkit.getWorld(Main.plugin.AreaConfig.getConfig().getString(name + ".Spawn.World"));
+		List<String> UUIDplayers = Main.plugin.AreaConfig.getConfig().getStringList(name + ".Players");
 		ArrayList<OfflinePlayer> players = new ArrayList<OfflinePlayer>(); 
 		for (String p: UUIDplayers) {
 			players.add(Bukkit.getOfflinePlayer(UUID.fromString(p)));
