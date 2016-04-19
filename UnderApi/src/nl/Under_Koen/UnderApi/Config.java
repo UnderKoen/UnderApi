@@ -30,6 +30,20 @@ public class Config {
             throw new IllegalStateException();
         this.configFile = new File(plugin.getDataFolder(), fileName);
     }
+    
+    @SuppressWarnings("deprecation")
+	public Config(JavaPlugin plugin, String fileName, String folderName) {
+        if (plugin == null)
+            throw new IllegalArgumentException("plugin cannot be null");
+        if (!plugin.isInitialized())
+            throw new IllegalArgumentException("plugin must be initialized");
+        this.plugin = plugin;
+        this.fileName = fileName;
+        File dataFolder = plugin.getDataFolder();
+        if (dataFolder == null)
+            throw new IllegalStateException();
+        this.configFile = new File(plugin.getDataFolder()+"/"+folderName, fileName);
+    }
 
     @SuppressWarnings("deprecation")
 	public void reloadConfig() {        

@@ -9,15 +9,18 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public static Main plugin;
 	
-	public Config FriendConfig = new Config(this, "FriendConfig.yml");
-	public Config AreaConfig = new Config(this, "AreaConfig.yml");
+	public Config FriendConfig = new Config(this, "Friend.yml", "Data");
+	public Config AreaConfig = new Config(this, "Area.yml", "Data");
+	public Config Config = new Config(this, "Config.yml");
+	
+	public Config[] Configs = {FriendConfig, AreaConfig, Config};
 	
 	@Override
     public void onEnable() {
-		FriendConfig.getConfig();
-		FriendConfig.saveConfig();
-		AreaConfig.getConfig();
-		AreaConfig.saveConfig();
+		for (Config c : Configs) {
+			c.getConfig();
+			c.saveConfig();
+		}
 		plugin = this;
 	}
 	
