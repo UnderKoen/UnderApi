@@ -6,15 +6,22 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import nl.Under_Koen.UnderApi.Main;
+
 public class Area {
 	private Location Spawn;
 	private String Name;
 	private ArrayList<OfflinePlayer> Players;
+	private ArrayList<String> PlayersUUID;
 	
+	
+	/**
+	 * @param spawn the location of the spawn
+	 * @param name the name of the area
+	 */
 	public Area (Location spawn, String name) {
-		setSpawn(spawn);
 		setName(name);
-		//TODO config
+		setSpawn(spawn);
 	}
 
 	/**
@@ -29,6 +36,11 @@ public class Area {
 	 */
 	public void setSpawn(Location spawn) {
 		Spawn = spawn;
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.X", Spawn.getBlockX());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Y", Spawn.getBlockY());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.Z", Spawn.getBlockZ());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Spawn.World", Spawn.getWorld());
+		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 
 	/**
@@ -41,7 +53,7 @@ public class Area {
 	/**
 	 * @param name the name to set
 	 */
-	public void setName(String name) {
+	private void setName(String name) {
 		Name = name;
 	}
 
@@ -57,6 +69,9 @@ public class Area {
 	 */
 	public void addPlayer(Player players) {
 		Players.add(players);
+		PlayersUUID.add(players.getUniqueId().toString());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
+		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 	
 	/**
@@ -64,6 +79,9 @@ public class Area {
 	 */
 	public void addPlayer(OfflinePlayer players) {
 		Players.add(players);
+		PlayersUUID.add(players.getUniqueId().toString());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
+		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 	
 	/**
@@ -71,6 +89,9 @@ public class Area {
 	 */
 	public void removePlayer(Player players) {
 		Players.remove(players);
+		PlayersUUID.remove(players.getUniqueId().toString());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
+		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 	
 	/**
@@ -78,6 +99,9 @@ public class Area {
 	 */
 	public void removePlayer(OfflinePlayer players) {
 		Players.remove(players);
+		PlayersUUID.remove(players.getUniqueId().toString());
+		Main.plugin.getCustomConfig("AreaConfig").set(Name + ".Players", PlayersUUID);
+		Main.plugin.saveCustomConfig("AreaConfig");
 	}
 	
 	/**
