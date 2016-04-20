@@ -16,7 +16,7 @@ public class Main extends JavaPlugin implements Listener{
 	public Config MoneyConfig = new Config(this, "MoneyConfig.yml");
 	
 	public Config[] Configs = {FriendData, AreaData, MoneyData, Config, MoneyConfig};
-	public Config[] DefaultConfigs = {MoneyConfig};
+	public Config[] DefaultConfigs = {MoneyConfig, Config};
 	
 	@Override
     public void onEnable() {
@@ -24,6 +24,7 @@ public class Main extends JavaPlugin implements Listener{
 			for (Config c2 : DefaultConfigs) {
 				if (c2 == c) {
 					c.saveDefaultConfig();
+					c.saveConfig();
 				}
 			}
 			c.getConfig();
