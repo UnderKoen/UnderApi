@@ -1,5 +1,6 @@
 name: UnderApi
 main: nl.Under_Koen.UnderApi.Main
 version: alpha.0.2
+softdepend: [Vault]
 commands:
   test:

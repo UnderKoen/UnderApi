@@ -9,11 +9,13 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public static Main plugin;
 	
-	public Config FriendConfig = new Config(this, "Friend.yml", "Data");
-	public Config AreaConfig = new Config(this, "Area.yml", "Data");
+	public Config Friend = new Config(this, "Friend.yml", "Data");
+	public Config Area = new Config(this, "Area.yml", "Data");
+	public Config Money = new Config(this, "Money.yml", "Data");
 	public Config Config = new Config(this, "Config.yml");
+	public Config MoneyConfig = new Config(this, "MoneyConfig.yml");
 	
-	public Config[] Configs = {FriendConfig, AreaConfig, Config};
+	public Config[] Configs = {Friend, Area, Config};
 	
 	@Override
     public void onEnable() {
