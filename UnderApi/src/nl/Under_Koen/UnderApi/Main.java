@@ -5,8 +5,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import nl.Under_Koen.UnderApi.Money.Money;
-
 public class Main extends JavaPlugin implements Listener{
 	
 	public static Main plugin;
@@ -41,7 +39,7 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
-			s.sendMessage(Money.getCurrencySymbol() + ": " + Money.getMaxMoney() + ": " + Money.getMinMoney());
+			
 		}
 		return false;
 	}
