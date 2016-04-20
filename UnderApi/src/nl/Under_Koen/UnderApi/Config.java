@@ -75,5 +75,14 @@ public class Config {
             }
         }
     }
+    
+    public void saveDefaultConfig() {
+        if (!configFile.exists()) {            
+            this.plugin.saveResource(fileName, false);
+        } else {
+        	getConfig();
+        	saveConfig();
+        }
+    }
 	
 }
