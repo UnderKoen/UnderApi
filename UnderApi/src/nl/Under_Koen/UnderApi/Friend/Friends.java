@@ -18,7 +18,7 @@ public class Friends {
 	/**
 	* @param player the player
 	*/
-	public Friends (Player player) {
+	private Friends (Player player) {
 		setPlayer(player);
 		setFriends(new ArrayList<OfflinePlayer>());
 	}
@@ -27,7 +27,7 @@ public class Friends {
 	 * @param player the player
 	 * @param pfriends the friends
 	 */
-	public Friends (Player player, ArrayList<OfflinePlayer> pfriends) {
+	private Friends (Player player, ArrayList<OfflinePlayer> pfriends) {
 		setPlayer(player);
 		setFriends(pfriends);
 	}
@@ -60,15 +60,15 @@ public class Friends {
 		Friends = friends;
 		FriendsUUID = new ArrayList<String>();
 		if (Friends == null || Friends.isEmpty()) {
-			Main.plugin.getCustomConfig("FriendConfig").set(Player.getUniqueId()+".Friends", FriendsUUID);
-			Main.plugin.saveCustomConfig("FriendConfig");
+			Main.plugin.FriendConfig.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
+			Main.plugin.FriendConfig.saveConfig();
 			return;
 		}
 		for (OfflinePlayer p:Friends) {
 			FriendsUUID.add(p.getUniqueId().toString());
 		}
-		Main.plugin.getCustomConfig("FriendConfig").set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.saveCustomConfig("FriendConfig");
+		Main.plugin.FriendConfig.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
+		Main.plugin.FriendConfig.saveConfig();
 	}
 	
 	/**
@@ -77,8 +77,8 @@ public class Friends {
 	public void addFriend(OfflinePlayer friend) {
 		Friends.add(friend);
 		FriendsUUID.add(friend.getUniqueId().toString());
-		Main.plugin.getCustomConfig("FriendConfig").set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.saveCustomConfig("FriendConfig");
+		Main.plugin.FriendConfig.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
+		Main.plugin.FriendConfig.saveConfig();
 	}
 	
 	/**
@@ -87,8 +87,8 @@ public class Friends {
 	public void addFriend(Player friend) {
 		Friends.add((OfflinePlayer) friend);
 		FriendsUUID.add(friend.getUniqueId().toString());
-		Main.plugin.getCustomConfig("FriendConfig").set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.saveCustomConfig("FriendConfig");
+		Main.plugin.FriendConfig.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
+		Main.plugin.FriendConfig.saveConfig();
 	}
 	
 	/**
@@ -97,8 +97,8 @@ public class Friends {
 	public void removeFriend(OfflinePlayer friend) {
 		Friends.remove(friend);
 		FriendsUUID.remove(friend.getUniqueId().toString());
-		Main.plugin.getCustomConfig("FriendConfig").set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.saveCustomConfig("FriendConfig");
+		Main.plugin.FriendConfig.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
+		Main.plugin.FriendConfig.saveConfig();
 	}
 	
 	/**
@@ -107,8 +107,8 @@ public class Friends {
 	public void removeFriend(Player friend) {
 		Friends.remove((OfflinePlayer) friend);
 		FriendsUUID.remove(friend.getUniqueId().toString());
-		Main.plugin.getCustomConfig("FriendConfig").set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.saveCustomConfig("FriendConfig");
+		Main.plugin.FriendConfig.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
+		Main.plugin.FriendConfig.saveConfig();
 	}
 	
 	/**
@@ -125,7 +125,7 @@ public class Friends {
 	}
 	
 	/**
-	 * @return Player name + ": " + friends
+	 * @return Player name + "; " + friends
 	 */
 	public String toString() {
 		String friends = "";
@@ -135,7 +135,7 @@ public class Friends {
 		if (friends.length() != 0) {
 			friends = friends.substring(0, friends.length()-2);
 		}
-		return Player.getName()+": "+friends;
+		return Player.getName()+"; "+friends;
 	}
 	
 	/**
@@ -143,7 +143,7 @@ public class Friends {
 	 * @return the friends of the player
 	 */
 	public static Friends getFriends(Player player) {
-		List<String> Ufriends = Main.plugin.getCustomConfig("FriendConfig").getStringList(player.getUniqueId()+".Friends");
+		List<String> Ufriends = Main.plugin.FriendConfig.getConfig().getStringList(player.getUniqueId()+".Friends");
 		if (Ufriends.isEmpty() || Ufriends == null) {
 			return new Friends(player);
 		}
