@@ -40,7 +40,6 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
-			
 		}
 		return false;
 	}
