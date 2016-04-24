@@ -1,5 +1,6 @@
 package nl.Under_Koen.UnderApi.Money;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import nl.Under_Koen.UnderApi.Main;
@@ -13,6 +14,8 @@ public class Money {
 	public static void setMoney(OfflinePlayer p, double money) {
 		Main.plugin.MoneyData.getConfig().set(pathMoney(p), money);
 		Main.plugin.MoneyData.saveConfig();
+		MoneySetEvent event = new MoneySetEvent();
+		Bukkit.getServer().getPluginManager().callEvent(event);
 	}
 	
 	public static void addMoney(OfflinePlayer p, double add) {
