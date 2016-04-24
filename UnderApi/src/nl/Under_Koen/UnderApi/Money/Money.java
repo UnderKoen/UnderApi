@@ -1,7 +1,7 @@
 package nl.Under_Koen.UnderApi.Money;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import nl.Under_Koen.UnderApi.Main;
 
@@ -14,23 +14,25 @@ public class Money {
 	public static void setMoney(OfflinePlayer p, double money) {
 		Main.plugin.MoneyData.getConfig().set(pathMoney(p), money);
 		Main.plugin.MoneyData.saveConfig();
+		MoneySetEvent event = new MoneySetEvent();
+		Bukkit.getServer().getPluginManager().callEvent(event);
 	}
 	
-	public static void addMoney(Player p, double add) {
+	public static void addMoney(OfflinePlayer p, double add) {
 		double current = Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p));
 		double newMoney = current + add;
 		Main.plugin.MoneyData.getConfig().set(pathMoney(p), newMoney);
 		Main.plugin.MoneyData.saveConfig();
 	}
 	
-	public static void removeMoney(Player p, double sub) {
+	public static void removeMoney(OfflinePlayer p, double sub) {
 		double current = Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p));
 		double newMoney = current - sub;
 		Main.plugin.MoneyData.getConfig().set(pathMoney(p), newMoney);
 		Main.plugin.MoneyData.saveConfig();
 	}
 	
-	public static double getMoney(Player p) {
+	public static double getMoney(OfflinePlayer p) {
 		return Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p));
 	}
 	
