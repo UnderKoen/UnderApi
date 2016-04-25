@@ -15,24 +15,34 @@ public class Money {
 	}
 	
 	public static void setMoney(OfflinePlayer p, double money, String currency) {
-		Main.plugin.MoneyData.getConfig().set(pathMoney(p,currency), money);
-		Main.plugin.MoneyData.saveConfig();
-		MoneySetEvent event = new MoneySetEvent();
+		MoneySetEvent event = new MoneySetEvent(getMoney(p, currency), money, currency, p);
 		Bukkit.getServer().getPluginManager().callEvent(event);
+		if (!event.getCancelled()) {
+			Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), event.getNewMoney());
+			Main.plugin.MoneyData.saveConfig();
+		}
 	}
 	
 	public static void addMoney(OfflinePlayer p, double add,String currency) {
 		double current = Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p,currency));
 		double newMoney = current + add;
-		Main.plugin.MoneyData.getConfig().set(pathMoney(p,currency), newMoney);
-		Main.plugin.MoneyData.saveConfig();
+		MoneyAddEvent event = new MoneyAddEvent(current, newMoney, currency, p);
+		Bukkit.getServer().getPluginManager().callEvent(event);
+		if (!event.getCancelled()) {
+			Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), event.getNewMoney());
+			Main.plugin.MoneyData.saveConfig();
+		}
 	}
 	
 	public static void removeMoney(OfflinePlayer p, double sub, String currency) {
 		double current = Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p, currency));
 		double newMoney = current - sub;
-		Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), newMoney);
-		Main.plugin.MoneyData.saveConfig();
+		MoneyRemoveEvent event = new MoneyRemoveEvent(current, newMoney, currency, p);
+		Bukkit.getServer().getPluginManager().callEvent(event);
+		if (!event.getCancelled()) {
+			Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), event.getNewMoney());
+			Main.plugin.MoneyData.saveConfig();
+		}
 	}
 	
 	public static double getMoney(OfflinePlayer p, String currency) {
