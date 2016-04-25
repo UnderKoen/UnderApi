@@ -2,7 +2,7 @@
 # ||  || || || || | ||--  ||        ||__||  ||_||  ||
 # \\__// || || ||=/ ||==  ||        ||  ||  ||     ||
 
-max-money: 10000000000000
-min-money: 0
-
-currency-symbol: '$'
+Default:
+  max-money: 10000000000000
+  min-money: 0
+  currency-symbol: '$'
