@@ -1,13 +1,9 @@
 package nl.Under_Koen.UnderApi;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import nl.Under_Koen.UnderApi.Money.Money;
 
 public class Main extends JavaPlugin implements Listener{
 	
@@ -45,8 +41,7 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
-			Money.setMoney((OfflinePlayer) s, 10, "");
-			Bukkit.broadcastMessage(Money.getMoney((OfflinePlayer)s,"")+"");
+			
 		}
 		return false;
 	}

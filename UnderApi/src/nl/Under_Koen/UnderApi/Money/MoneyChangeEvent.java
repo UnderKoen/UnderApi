@@ -11,11 +11,11 @@ public class MoneyChangeEvent extends Event{
 	
 	private OfflinePlayer Player;
 	
-	private String Currency;
+	private Currency Currency;
 	
 	private Boolean Cancelled;
 	
-	public MoneyChangeEvent(double oldMoney, double newMoney, String currency, OfflinePlayer player) {
+	public MoneyChangeEvent(double oldMoney, double newMoney, Currency currency, OfflinePlayer player) {
 		setOldMoney(oldMoney);
 		setNewMoney(newMoney);
 		this.Currency = currency;
@@ -27,7 +27,7 @@ public class MoneyChangeEvent extends Event{
 		return Player;
 	}
 	
-	public String getCurrency() {
+	public Currency getCurrency() {
 		return Currency;
 	}
 	

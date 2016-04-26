@@ -4,7 +4,7 @@ import org.bukkit.OfflinePlayer;
 
 public class MoneyRemoveEvent extends MoneyChangeEvent{
 
-	public MoneyRemoveEvent(double oldMoney, double newMoney, String currency, OfflinePlayer player) {
+	public MoneyRemoveEvent(double oldMoney, double newMoney, Currency currency, OfflinePlayer player) {
 		super(oldMoney, newMoney, currency, player);
 	}
 }
