@@ -160,9 +160,6 @@ public class Friends {
 	 * @return true if the player is online
 	 */
 	 public static Boolean isOnline(OfflinePlayer player) {
-		if (player.getPlayer() == null) {
-			return false;
-		}
-		return true;
+		return player.isOnline();
 	}
 }
