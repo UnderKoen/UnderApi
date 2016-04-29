@@ -4,6 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import nl.Under_Koen.UnderApi.Main;
+import nl.Under_Koen.UnderApi.Money.Events.MoneyAddEvent;
+import nl.Under_Koen.UnderApi.Money.Events.MoneyRemoveEvent;
+import nl.Under_Koen.UnderApi.Money.Events.MoneySetEvent;
 
 public class Money {
 	

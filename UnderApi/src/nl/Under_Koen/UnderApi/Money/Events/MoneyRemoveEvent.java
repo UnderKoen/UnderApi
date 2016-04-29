@@ -1,6 +1,8 @@
-package nl.Under_Koen.UnderApi.Money;
+package nl.Under_Koen.UnderApi.Money.Events;
 
 import org.bukkit.OfflinePlayer;
+
+import nl.Under_Koen.UnderApi.Money.Currency;
 
 public class MoneyRemoveEvent extends MoneyChangeEvent{
 

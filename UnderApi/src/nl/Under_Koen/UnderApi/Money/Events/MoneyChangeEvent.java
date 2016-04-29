@@ -1,8 +1,10 @@
-package nl.Under_Koen.UnderApi.Money;
+package nl.Under_Koen.UnderApi.Money.Events;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import nl.Under_Koen.UnderApi.Money.Currency;
 
 public class MoneyChangeEvent extends Event{
 
