@@ -1,7 +1,7 @@
 package nl.Under_Koen.UnderApi.Money;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import nl.Under_Koen.UnderApi.Main;
 import nl.Under_Koen.UnderApi.Money.Events.MoneyAddEvent;
@@ -10,14 +10,14 @@ import nl.Under_Koen.UnderApi.Money.Events.MoneySetEvent;
 
 public class Money {
 	
-	private static String pathMoney(OfflinePlayer p, Currency currency) {
+	private static String pathMoney(Player p, Currency currency) {
 		if (currency == null) {
 			return p.getUniqueId().toString() + ".Default" +".Money";
 		}
 		return p.getUniqueId().toString() + "." + currency.getName() +".Money";
 	}
 	
-	public static void setMoney(OfflinePlayer p, double money, Currency currency) {
+	public static void setMoney(Player p, double money, Currency currency) {
 		MoneySetEvent event = new MoneySetEvent(getMoney(p, currency), money, currency, p);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 		if (!event.getCancelled()) {
@@ -26,7 +26,7 @@ public class Money {
 		}
 	}
 	
-	public static void addMoney(OfflinePlayer p, double add,Currency currency) {
+	public static void addMoney(Player p, double add,Currency currency) {
 		double current = Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p,currency));
 		double newMoney = current + add;
 		MoneyAddEvent event = new MoneyAddEvent(current, newMoney, currency, p);
@@ -37,7 +37,7 @@ public class Money {
 		}
 	}
 	
-	public static void removeMoney(OfflinePlayer p, double sub, Currency currency) {
+	public static void removeMoney(Player p, double sub, Currency currency) {
 		double current = Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p, currency));
 		double newMoney = current - sub;
 		MoneyRemoveEvent event = new MoneyRemoveEvent(current, newMoney, currency, p);
@@ -48,7 +48,7 @@ public class Money {
 		}
 	}
 	
-	public static double getMoney(OfflinePlayer p, Currency currency) {
+	public static double getMoney(Player p, Currency currency) {
 		return Main.plugin.MoneyData.getConfig().getDouble(pathMoney(p, currency));
 	}
 }
