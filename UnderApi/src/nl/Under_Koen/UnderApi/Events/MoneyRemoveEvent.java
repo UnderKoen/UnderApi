@@ -1,4 +1,4 @@
-package nl.Under_Koen.UnderApi.Money.Events;
+package nl.Under_Koen.UnderApi.Events;
 
 import org.bukkit.entity.Player;
 

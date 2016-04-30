@@ -4,9 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import nl.Under_Koen.UnderApi.Main;
-import nl.Under_Koen.UnderApi.Money.Events.MoneyAddEvent;
-import nl.Under_Koen.UnderApi.Money.Events.MoneyRemoveEvent;
-import nl.Under_Koen.UnderApi.Money.Events.MoneySetEvent;
+import nl.Under_Koen.UnderApi.Events.MoneyAddEvent;
+import nl.Under_Koen.UnderApi.Events.MoneyRemoveEvent;
+import nl.Under_Koen.UnderApi.Events.MoneySetEvent;
 
 public class Money {
 	
@@ -20,7 +20,7 @@ public class Money {
 	public static void setMoney(Player p, double money, Currency currency) {
 		MoneySetEvent event = new MoneySetEvent(getMoney(p, currency), money, currency, p);
 		Bukkit.getServer().getPluginManager().callEvent(event);
-		if (!event.getCancelled()) {
+		if (!event.isCancelled()) {
 			Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), event.getNewMoney());
 			Main.plugin.MoneyData.saveConfig();
 		}
@@ -31,7 +31,7 @@ public class Money {
 		double newMoney = current + add;
 		MoneyAddEvent event = new MoneyAddEvent(current, newMoney, currency, p);
 		Bukkit.getServer().getPluginManager().callEvent(event);
-		if (!event.getCancelled()) {
+		if (!event.isCancelled()) {
 			Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), event.getNewMoney());
 			Main.plugin.MoneyData.saveConfig();
 		}
@@ -42,7 +42,7 @@ public class Money {
 		double newMoney = current - sub;
 		MoneyRemoveEvent event = new MoneyRemoveEvent(current, newMoney, currency, p);
 		Bukkit.getServer().getPluginManager().callEvent(event);
-		if (!event.getCancelled()) {
+		if (!event.isCancelled()) {
 			Main.plugin.MoneyData.getConfig().set(pathMoney(p, currency), event.getNewMoney());
 			Main.plugin.MoneyData.saveConfig();
 		}
