@@ -8,4 +8,8 @@ public class MoneySetEvent extends MoneyChangeEvent{
 	public MoneySetEvent(double oldMoney, double newMoney, Currency currency, Player player) {
 		super(oldMoney, newMoney, currency, player);
 	}
+	
+	public double getSettedMoney() {
+		return super.getNewMoney();
+	}
 }

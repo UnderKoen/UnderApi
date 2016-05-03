@@ -1,10 +1,6 @@
 package nl.Under_Koen.UnderApi.Friend;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -18,7 +14,7 @@ public class Friends {
 	/**
 	* @param player the player
 	*/
-	private Friends (Player player) {
+	public Friends (Player player) {
 		setPlayer(player);
 		setFriends(new ArrayList<OfflinePlayer>());
 	}
@@ -27,7 +23,7 @@ public class Friends {
 	 * @param player the player
 	 * @param pfriends the friends
 	 */
-	private Friends (Player player, ArrayList<OfflinePlayer> pfriends) {
+	public Friends (Player player, ArrayList<OfflinePlayer> pfriends) {
 		setPlayer(player);
 		setFriends(pfriends);
 	}
@@ -136,30 +132,5 @@ public class Friends {
 			friends = friends.substring(0, friends.length()-2);
 		}
 		return Player.getName()+"; "+friends;
-	}
-	
-	/**
-	 * @param player the player
-	 * @return the friends of the player
-	 */
-	public static Friends getFriends(Player player) {
-		List<String> Ufriends = Main.plugin.FriendData.getConfig().getStringList(player.getUniqueId()+".Friends");
-		if (Ufriends.isEmpty() || Ufriends == null) {
-			return new Friends(player);
-		}
-		ArrayList<OfflinePlayer> Pfriends = new ArrayList<OfflinePlayer>();
-		for (String friend: Ufriends) {
-			Pfriends.add(Bukkit.getOfflinePlayer(UUID.fromString(friend)));
-		}
-		Friends f = new Friends(player, Pfriends);
-		return f;
-	}
-	
-	/**
-	 * @param player the player
-	 * @return true if the player is online
-	 */
-	 public static Boolean isOnline(OfflinePlayer player) {
-		return player.isOnline();
 	}
 }

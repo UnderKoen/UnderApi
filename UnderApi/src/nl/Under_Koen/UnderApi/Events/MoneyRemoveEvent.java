@@ -9,4 +9,8 @@ public class MoneyRemoveEvent extends MoneyChangeEvent{
 	public MoneyRemoveEvent(double oldMoney, double newMoney, Currency currency, Player player) {
 		super(oldMoney, newMoney, currency, player);
 	}
+	
+	public double getRemovedMoney() {
+		return super.getOldMoney() - super.getNewMoney();
+	}
 }

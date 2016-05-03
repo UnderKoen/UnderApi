@@ -15,7 +15,7 @@ public class MoneyChangeEvent extends PlayerEvent implements Cancellable{
 	
 	private Currency Currency;
 	
-	private Boolean Cancelled;
+	protected Boolean Cancelled;
 	
 	public MoneyChangeEvent(double oldMoney, double newMoney, Currency currency, Player player) {
 		super(player);
@@ -62,6 +62,9 @@ public class MoneyChangeEvent extends PlayerEvent implements Cancellable{
 
 	@Override
 	public void setCancelled(boolean cancelled) {
+		if (cancelled) {
+			setNewMoney(getOldMoney());
+		}
 		Cancelled = cancelled;
 		
 	}

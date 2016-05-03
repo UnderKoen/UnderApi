@@ -1,13 +1,8 @@
 package nl.Under_Koen.UnderApi.Area;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import nl.Under_Koen.UnderApi.Main;
@@ -33,7 +28,7 @@ public class Area {
 	 * @param spawn the location of the spawn
 	 * @param name the name of the area
 	 */
-	private Area (Location spawn, String name, ArrayList<OfflinePlayer> player) {
+	public Area (Location spawn, String name, ArrayList<OfflinePlayer> player) {
 		setName(name);
 		setPlayers(player);
 		setSpawn(spawn);
@@ -165,26 +160,5 @@ public class Area {
 		
 		return Name + "; " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
 		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "'; ";
-	}
-	
-	/**
-	 * @param name name of the area
-	 * @return the area
-	 */
-	public static Area getArea(String name) {
-		String test = Main.plugin.AreaData.getConfig().getString(name+".Spawn.X");
-		if (test == "" || test == null || test.isEmpty()) {
-			return null;
-		}
-		int X = Main.plugin.AreaData.getConfig().getInt(name + ".Spawn.X");
-		int Y = Main.plugin.AreaData.getConfig().getInt(name + ".Spawn.Y");
-		int Z = Main.plugin.AreaData.getConfig().getInt(name + ".Spawn.Z");
-		World World = Bukkit.getWorld(Main.plugin.AreaData.getConfig().getString(name + ".Spawn.World"));
-		List<String> UUIDplayers = Main.plugin.AreaData.getConfig().getStringList(name + ".Players");
-		ArrayList<OfflinePlayer> players = new ArrayList<OfflinePlayer>(); 
-		for (String p: UUIDplayers) {
-			players.add(Bukkit.getOfflinePlayer(UUID.fromString(p)));
-		}
-		return new Area(new Location(World, X, Y, Z), name, players);
 	}
 }
