@@ -19,31 +19,39 @@ public class SidebarManager extends ScoreboardManager {
 		p.setScoreboard(getScoreboard());
 	}
 	
+	public void hide(Player p) {
+		p.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+	}
+	
 	public void setDisplayName(String name) {
 		getObjective().setDisplayName(name);
 	}
 	
 	private HashMap<Integer, String> Score = new HashMap<Integer, String>();
+	private HashMap<Integer, String> Lines = new HashMap<Integer, String>();
 	
 	public String getLine(int line) {
-		if (Score.containsKey(line)) {
-			return Score.get(line);
+		if (Lines.containsKey(line)) {
+			return Lines.get(line);
 		} else {
 			return null;
 		}
 	}
 	
+	public HashMap<Integer, String> getLines() {
+		return Lines;
+	}
+	
 	public void setLine(int line, String text) {
 		removeLine(line);
 		Score.put(line, text);
+		Lines.put(line, text);
 		String newText = text;
-		int i = 0;
-		while(getObjective().getScore(newText).getScore() != 0) {
+		for(int i=0 ; (getObjective().getScore(newText).getScore() != 0) ; i++) {
 			newText = "§" + i + "§r" + text;
 			if (i > 9) {
 				return;
 			}
-			i++;
 		}
 		getObjective().getScore(newText).setScore(-line);
 	}
@@ -64,23 +72,14 @@ public class SidebarManager extends ScoreboardManager {
 		if (available == 0) {
 			available = Score.size()+1;
 		}
-		String newText = text;
-		int i = 0;
-		while(getObjective().getScore(newText).getScore() != 0) {
-			newText = "§" + i + "§r" + text;
-			if (i > 9) {
-				return;
-			}
-			i++;
-		}
-		getObjective().getScore(newText).setScore(-available);
-		Score.put(available, newText);
+		setLine(available, text);
 	}
 	
 	public void removeLine(int line) {
 		if (Score.containsKey(line)) {
 			getScoreboard().resetScores(Score.get(line));
 			Score.remove(line);
+			Lines.remove(line);
 		}
 	}
 	

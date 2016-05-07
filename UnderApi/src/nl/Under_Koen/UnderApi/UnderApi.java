@@ -9,11 +9,14 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 
 import nl.Under_Koen.UnderApi.Area.Area;
 import nl.Under_Koen.UnderApi.Friend.Friends;
 import nl.Under_Koen.UnderApi.Money.Currency;
 import nl.Under_Koen.UnderApi.Money.Money;
+import nl.Under_Koen.UnderApi.Scoreboard.SidebarManager;
 
 public class UnderApi {
 
@@ -61,5 +64,24 @@ public class UnderApi {
 	
 	public static Currency getCurrency(String currency) {
 		return new Currency(currency);
+	}
+	
+	public static SidebarManager getSidebarManager(Player p) {
+		SidebarManager sm = new SidebarManager();
+		Objective ob = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+		if (ob != null) {
+			for (String name : p.getScoreboard().getEntries()) {
+				if (ob.getScore(name).getScore() != 0) {
+					for(int i=0 ; i > 9 ; i++) {
+						if (name.contains("§"+i+"§r")) {
+							name = name.replace("§"+i+"§r", "");
+							break;
+						}
+					}
+					sm.setLine(-ob.getScore(name).getScore(), name);
+				}
+			}
+		}
+		return sm;
 	}
 }

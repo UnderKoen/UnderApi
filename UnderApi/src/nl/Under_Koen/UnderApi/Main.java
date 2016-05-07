@@ -41,7 +41,6 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
-			//TODO add in underapi get sidebarmanager kijk bij add begin voor manier
 		}
 		return false;
 	}
