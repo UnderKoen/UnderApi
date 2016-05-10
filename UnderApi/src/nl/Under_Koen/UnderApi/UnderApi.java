@@ -16,7 +16,7 @@ import nl.Under_Koen.UnderApi.Area.Area;
 import nl.Under_Koen.UnderApi.Friend.Friends;
 import nl.Under_Koen.UnderApi.Money.Currency;
 import nl.Under_Koen.UnderApi.Money.Money;
-import nl.Under_Koen.UnderApi.Scoreboard.SidebarManager;
+import nl.Under_Koen.UnderApi.Scoreboard.FakeSidebarManager;
 
 public class UnderApi {
 
@@ -66,8 +66,8 @@ public class UnderApi {
 		return new Currency(currency);
 	}
 	
-	public static SidebarManager getSidebarManager(Player p) {
-		SidebarManager sm = new SidebarManager();
+	public static FakeSidebarManager getFakeSidebarManager(Player p) {
+		FakeSidebarManager sm = new FakeSidebarManager(p);
 		Objective ob = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
 		if (ob != null) {
 			for (String name : p.getScoreboard().getEntries()) {

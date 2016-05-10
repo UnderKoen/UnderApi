@@ -7,7 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import nl.Under_Koen.UnderApi.Objectives.MoneyObjective;
 import nl.Under_Koen.UnderApi.Scoreboard.BelowNameManager;
+import nl.Under_Koen.UnderApi.Scoreboard.FakeSidebarManager;
+import nl.Under_Koen.UnderApi.Scoreboard.PlayerListManager;
 import nl.Under_Koen.UnderApi.Scoreboard.ScoreboardType;
+import nl.Under_Koen.UnderApi.Scoreboard.SidebarManager;
 
 public class Main extends JavaPlugin implements Listener{
 	
@@ -48,10 +51,27 @@ public class Main extends JavaPlugin implements Listener{
 		if (label.equalsIgnoreCase("Test")) {
 			ScoreboardType type = ScoreboardType.MONEY;
 			type.setCurrency(UnderApi.getCurrency("Money"));
-			new BelowNameManager(type).Show((Player) s);
+			BelowNameManager bm = new BelowNameManager(type, (Player) s);
+			bm.setSuffix("[Money]");
+			SidebarManager sm = new SidebarManager(type, (Player) s);
+			sm.setDisplayName("[Money]");
+			new PlayerListManager(type, (Player) s);
 		}
 		if (label.equalsIgnoreCase("Test2")) {
 			UnderApi.getMoney((Player) s, UnderApi.getCurrency("Money")).addMoney(10);
+		}
+		if (label.equalsIgnoreCase("Test3")) {
+			ScoreboardType type = ScoreboardType.HEAL;
+			type.setCurrency(UnderApi.getCurrency("Money"));
+			BelowNameManager bm = new BelowNameManager(type, (Player) s);
+			bm.setSuffix("[Money]");
+			SidebarManager sm = new SidebarManager(type, (Player) s);
+			sm.setDisplayName("[Money]");
+			new PlayerListManager(type, (Player) s);
+		}
+		if (label.equalsIgnoreCase("Test4")) {
+			FakeSidebarManager sm = UnderApi.getFakeSidebarManager((Player)s);
+			sm.setLine(0, "LOL");
 		}
 		return false;
 	}

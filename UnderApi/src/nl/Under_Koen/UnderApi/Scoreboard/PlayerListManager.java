@@ -4,14 +4,14 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
-public class SidebarManager extends ScoreboardManager {
+public class PlayerListManager extends ScoreboardManager {
 
-	public SidebarManager(Player p) {
-		super(DisplaySlot.SIDEBAR, p);
+	public PlayerListManager(Player p) {
+		super(DisplaySlot.PLAYER_LIST, p);
 	}
 	
-	public SidebarManager(ScoreboardType type, Player p) {
-		super(DisplaySlot.SIDEBAR, type, p);
+	public PlayerListManager(ScoreboardType type, Player p) {
+		super(DisplaySlot.PLAYER_LIST, type, p);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -22,9 +22,5 @@ public class SidebarManager extends ScoreboardManager {
 	@SuppressWarnings("deprecation")
 	public int getScore(OfflinePlayer p) {
 		return getObjective().getScore(p).getScore();
-	}
-	
-	public void setDisplayName(String displayName) {
-		getObjective().setDisplayName(displayName);
 	}
 }

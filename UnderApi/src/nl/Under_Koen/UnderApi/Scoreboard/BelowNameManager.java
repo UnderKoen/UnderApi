@@ -1,19 +1,30 @@
 package nl.Under_Koen.UnderApi.Scoreboard;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
 public class BelowNameManager extends ScoreboardManager {
 
-	public BelowNameManager() {
-		super(DisplaySlot.BELOW_NAME);
+	public BelowNameManager(Player p) {
+		super(DisplaySlot.BELOW_NAME, p);
 	}
 	
-	public BelowNameManager(ScoreboardType type) {
-		super(DisplaySlot.SIDEBAR, type);
+	public BelowNameManager(ScoreboardType type, Player p) {
+		super(DisplaySlot.BELOW_NAME, type, p);
 	}
 	
-	public void Show (Player p) {
-		p.setScoreboard(getScoreboard());
+	@SuppressWarnings("deprecation")
+	public void setScore(OfflinePlayer p, int score) {
+		getObjective().getScore(p).setScore(score);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public int getScore(OfflinePlayer p) {
+		return getObjective().getScore(p).getScore();
+	}
+	
+	public void setSuffix(String suffix) {
+		getObjective().setDisplayName(suffix);
 	}
 }
