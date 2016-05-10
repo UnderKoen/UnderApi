@@ -2,8 +2,12 @@ package nl.Under_Koen.UnderApi;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import nl.Under_Koen.UnderApi.Objectives.MoneyObjective;
+import nl.Under_Koen.UnderApi.Scoreboard.BelowNameManager;
+import nl.Under_Koen.UnderApi.Scoreboard.ScoreboardType;
 
 public class Main extends JavaPlugin implements Listener{
 	
@@ -20,7 +24,8 @@ public class Main extends JavaPlugin implements Listener{
 	
 	@Override
     public void onEnable() {
-		this.getServer().getPluginManager().registerEvents(this, this);
+		getServer().getPluginManager().registerEvents(this, this);
+		getServer().getPluginManager().registerEvents(new MoneyObjective(), this);
 		for (Config c : Configs) {
 			for (Config c2 : DefaultConfigs) {
 				if (c2 == c) {
@@ -41,6 +46,12 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
+			ScoreboardType type = ScoreboardType.MONEY;
+			type.setCurrency(UnderApi.getCurrency("Money"));
+			new BelowNameManager(type).Show((Player) s);
+		}
+		if (label.equalsIgnoreCase("Test2")) {
+			UnderApi.getMoney((Player) s, UnderApi.getCurrency("Money")).addMoney(10);
 		}
 		return false;
 	}

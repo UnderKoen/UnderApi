@@ -1,19 +1,25 @@
 package nl.Under_Koen.UnderApi.Events;
 
 import org.bukkit.OfflinePlayer;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import nl.Under_Koen.UnderApi.Money.Currency;
+public class OfflinePlayerEvent extends Event{
 
-public class MoneyUpdateEvent extends OfflinePlayerEvent{
+	private OfflinePlayer Player;
 	
-	public Currency Currency;
-	
-	public MoneyUpdateEvent (OfflinePlayer offlinePlayer, Currency c) {
-		super(offlinePlayer);
-		this.Currency = c;
+	public OfflinePlayerEvent(OfflinePlayer player) {
+		setPlayer(player);
 	}
 
+	public OfflinePlayer getPlayer() {
+		return Player;
+	}
+
+	public void setPlayer(OfflinePlayer player) {
+		Player = player;
+	}
+	
 	private static final HandlerList handlers = new HandlerList();
 
 	public HandlerList getHandlers() {
@@ -24,8 +30,5 @@ public class MoneyUpdateEvent extends OfflinePlayerEvent{
 	    return handlers;
 	}
 	
-	public Currency getCurrency() {
-		return Currency;
-	}
 
 }

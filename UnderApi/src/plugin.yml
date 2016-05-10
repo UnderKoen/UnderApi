@@ -7,3 +7,6 @@ main: nl.Under_Koen.UnderApi.Main
 version: alpha.0.2
 commands:
   test:
+  test2:
+  test3:
+  test4:

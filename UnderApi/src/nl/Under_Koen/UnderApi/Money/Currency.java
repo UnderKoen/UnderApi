@@ -1,5 +1,7 @@
 package nl.Under_Koen.UnderApi.Money;
 
+import java.util.List;
+
 import nl.Under_Koen.UnderApi.Main;
 
 public class Currency {
@@ -12,6 +14,11 @@ public class Currency {
 	
 	public Currency(String name) {
 		setName(name);
+		if (!Main.plugin.MoneyData.getConfig().getStringList("Currencys").contains(name)) {
+			List<String> list = Main.plugin.MoneyData.getConfig().getStringList("Currencys");
+			list.add(Name);
+			Main.plugin.MoneyData.getConfig().set("Currencys", list);
+		}
 		Double Max = Main.plugin.MoneyConfig.getConfig().getDouble(pathMaxMoney());
 		if (Max == 0) {
 			setMaxMoney(new Currency("").getMaxMoney());

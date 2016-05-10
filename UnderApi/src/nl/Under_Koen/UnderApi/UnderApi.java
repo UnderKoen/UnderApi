@@ -58,7 +58,7 @@ public class UnderApi {
 		return f;
 	}
 	
-	public static Money getMoney(Player player, Currency currency) {
+	public static Money getMoney(OfflinePlayer player, Currency currency) {
 		return new Money(player, currency);
 	}
 	

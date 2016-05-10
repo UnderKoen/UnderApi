@@ -1,11 +1,14 @@
 package nl.Under_Koen.UnderApi.Scoreboard;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-public class ScoreboardManager {
+import nl.Under_Koen.UnderApi.UnderApi;
+
+class ScoreboardManager {
 	
 	private Scoreboard Scoreboard;
 	private Objective Objective; 
@@ -16,9 +19,17 @@ public class ScoreboardManager {
 		getObjective().setDisplaySlot(displaySlot);
 	}
 	
-	public ScoreboardManager (DisplaySlot displaySlot, String objectiveType) {
+	@SuppressWarnings("deprecation")
+	public ScoreboardManager (DisplaySlot displaySlot, ScoreboardType type) {
 		setScoreboard(getManager().getNewScoreboard());
-		setObjective((getScoreboard().registerNewObjective("scoreboard", objectiveType)));
+		if (type != ScoreboardType.MONEY) {
+			setObjective((getScoreboard().registerNewObjective("scoreboard", type.getType())));	
+		} else {
+			setObjective((getScoreboard().registerNewObjective("money_"+type.getCurrency().getName(), "dummy")));
+			for (OfflinePlayer p: Bukkit.getOfflinePlayers()) {
+				getObjective().getScore(p).setScore((int) UnderApi.getMoney(p, type.getCurrency()).getMoney());
+			}
+		}
 		getObjective().setDisplaySlot(displaySlot);
 	}
 

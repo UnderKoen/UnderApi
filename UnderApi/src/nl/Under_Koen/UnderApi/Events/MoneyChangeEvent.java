@@ -1,13 +1,12 @@
 package nl.Under_Koen.UnderApi.Events;
 
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 
 import nl.Under_Koen.UnderApi.Money.Currency;
 
-public class MoneyChangeEvent extends PlayerEvent implements Cancellable{
+public class MoneyChangeEvent extends OfflinePlayerEvent implements Cancellable{
 
 	private double OldMoney;
 	private double NewMoney;
@@ -17,7 +16,7 @@ public class MoneyChangeEvent extends PlayerEvent implements Cancellable{
 	
 	protected Boolean Cancelled;
 	
-	public MoneyChangeEvent(double oldMoney, double newMoney, Currency currency, Player player) {
+	public MoneyChangeEvent(double oldMoney, double newMoney, Currency currency, OfflinePlayer player) {
 		super(player);
 		setOldMoney(oldMoney);
 		setNewMoney(newMoney);
