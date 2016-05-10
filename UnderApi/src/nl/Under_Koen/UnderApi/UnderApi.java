@@ -67,8 +67,8 @@ public class UnderApi {
 	}
 	
 	public static FakeSidebarManager getFakeSidebarManager(Player p) {
-		FakeSidebarManager sm = new FakeSidebarManager(p);
 		Objective ob = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+		FakeSidebarManager sm = new FakeSidebarManager(p);
 		if (ob != null) {
 			for (String name : p.getScoreboard().getEntries()) {
 				if (ob.getScore(name).getScore() != 0) {
