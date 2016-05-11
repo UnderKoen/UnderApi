@@ -1,6 +1,4 @@
 package nl.Under_Koen.UnderApi;
-
-//import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -53,10 +51,6 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
-//			Bukkit.broadcastMessage(Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands").get("Test.hoi").toString());
-//			for (String s2 : Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands").getKeys(false)) {
-//				Bukkit.broadcastMessage(s2);
-//			}
 		}
 		if (label.equalsIgnoreCase("Test2")) {
 		}
