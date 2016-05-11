@@ -1,4 +1,4 @@
-package nl.Under_Koen.UnderApi.Events;
+package nl.Under_Koen.UnderApi.Events.Money;
 
 import org.bukkit.OfflinePlayer;
 

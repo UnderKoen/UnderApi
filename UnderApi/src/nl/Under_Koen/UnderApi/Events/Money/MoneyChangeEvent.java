@@ -1,9 +1,10 @@
-package nl.Under_Koen.UnderApi.Events;
+package nl.Under_Koen.UnderApi.Events.Money;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
+import nl.Under_Koen.UnderApi.Events.OfflinePlayerEvent;
 import nl.Under_Koen.UnderApi.Money.Currency;
 
 public class MoneyChangeEvent extends OfflinePlayerEvent implements Cancellable{

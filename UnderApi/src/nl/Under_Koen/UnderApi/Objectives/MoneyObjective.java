@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.Objective;
 
 import nl.Under_Koen.UnderApi.UnderApi;
-import nl.Under_Koen.UnderApi.Events.MoneyUpdateEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneyUpdateEvent;
 
 public class MoneyObjective implements Listener {
 

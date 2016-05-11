@@ -2,15 +2,16 @@ package nl.Under_Koen.UnderApi.Money;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.omg.CORBA.DynAnyPackage.InvalidValue;
 
 import nl.Under_Koen.UnderApi.Main;
 import nl.Under_Koen.UnderApi.UnderApi;
-import nl.Under_Koen.UnderApi.Events.MoneyAddEvent;
-import nl.Under_Koen.UnderApi.Events.MoneyChangeEvent;
-import nl.Under_Koen.UnderApi.Events.MoneyPayEvent;
-import nl.Under_Koen.UnderApi.Events.MoneyRemoveEvent;
-import nl.Under_Koen.UnderApi.Events.MoneySetEvent;
-import nl.Under_Koen.UnderApi.Events.MoneyUpdateEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneyAddEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneyChangeEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneyPayEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneyRemoveEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneySetEvent;
+import nl.Under_Koen.UnderApi.Events.Money.MoneyUpdateEvent;
 
 public class Money {
 	
@@ -70,9 +71,9 @@ public class Money {
 		saveMoney(event.getNewMoney());
 	}
 	
-	public void payMoney(OfflinePlayer player2, double payment) throws Exception {
+	public void payMoney(OfflinePlayer player2, double payment) throws InvalidValue {
 		if (player2 == getPlayer()) {
-			throw new Exception("Can't pay yourself");
+			throw new InvalidValue("Can't pay yourself");
 		}
 		double currentP = Main.plugin.MoneyData.getConfig().getDouble(pathMoney());
 		double currentP2 = UnderApi.getMoney(player2, getCurrency()).getMoney();

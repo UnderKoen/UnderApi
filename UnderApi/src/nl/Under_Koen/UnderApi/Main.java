@@ -1,11 +1,13 @@
 package nl.Under_Koen.UnderApi;
 
+//import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import nl.Under_Koen.UnderApi.Objectives.MoneyObjective;
+import nl.Under_Koen.UnderApi.TabCompletion.TabCompleteHandler;
 
 public class Main extends JavaPlugin implements Listener{
 	
@@ -14,11 +16,12 @@ public class Main extends JavaPlugin implements Listener{
 	public Config FriendData = new Config(this, "Friend.yml", "Data");
 	public Config AreaData = new Config(this, "Area.yml", "Data");
 	public Config MoneyData = new Config(this, "Money.yml", "Data");
+	public Config TabCompleteCommands = new Config(this, "TabCompleteCommands.yml");
 	public Config MoneyConfig = new Config(this, "MoneyConfig.yml");
 	public Config Config = new Config(this, "Config.yml");
 	
-	public Config[] Configs = {FriendData, AreaData, MoneyData, Config, MoneyConfig};
-	public Config[] DefaultConfigs = {MoneyConfig, Config};
+	public Config[] Configs = {TabCompleteCommands, FriendData, AreaData, MoneyData, Config, MoneyConfig};
+	public Config[] DefaultConfigs = {MoneyConfig, Config, TabCompleteCommands};
 	
 	@Override
     public void onEnable() {
@@ -35,6 +38,12 @@ public class Main extends JavaPlugin implements Listener{
 			c.saveConfig();
 		}
 		plugin = this;
+		if (Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands") != null ) {
+			for (String s : Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands").getKeys(false)) {
+				s.length();
+				getCommand(s).setTabCompleter(new TabCompleteHandler());
+			}
+		}
 	}
 	
 	@Override
@@ -44,8 +53,10 @@ public class Main extends JavaPlugin implements Listener{
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
 		if (label.equalsIgnoreCase("Test")) {
-			UnderApi.getFakeSidebarManager((Player) s).addLine("oi");
-			UnderApi.getFakeSidebarManager((Player) s).addLine("oi");
+//			Bukkit.broadcastMessage(Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands").get("Test.hoi").toString());
+//			for (String s2 : Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands").getKeys(false)) {
+//				Bukkit.broadcastMessage(s2);
+//			}
 		}
 		if (label.equalsIgnoreCase("Test2")) {
 		}
