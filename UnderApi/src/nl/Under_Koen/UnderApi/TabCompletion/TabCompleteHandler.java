@@ -42,8 +42,8 @@ public class TabCompleteHandler implements TabCompleter{
 						}
 						subcommands = Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection(subcommands.getCurrentPath() + path);
 						List<String> list = new ArrayList<>();
-						for (String sub : subcommands.getKeys(false)) {
-							list.add(sub);
+						for (String subCommands : subcommands.getKeys(false)) {
+							list.add(subCommands);
 						}
 						return list;
 					}
