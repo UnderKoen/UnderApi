@@ -107,10 +107,10 @@ public class FakeSidebarManager extends ScoreboardManager {
 	}
 
 	public void addSpace() {
-		addLine("");
+		addLine(" ");
 	}
 	
 	public void setSpace(int line) {
-		setLine(line, "");
+		setLine(line, " ");
 	}
 }
