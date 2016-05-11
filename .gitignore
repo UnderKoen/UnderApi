@@ -13,3 +13,7 @@ hs_err_pid*
 
 #bin
 bin/
+.settings/
+.project
+.classpath
+.DS_Store
