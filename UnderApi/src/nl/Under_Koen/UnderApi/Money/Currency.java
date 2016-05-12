@@ -6,32 +6,32 @@ import nl.Under_Koen.UnderApi.Main;
 
 public class Currency {
 	
-	private String Name;
-	private String Symbol;
+	private String name;
+	private String symbol;
 	
-	private Double MaxMoney;
-	private Double MinMoney;
+	private Double maxMoney;
+	private Double minMoney;
 	
 	public Currency(String name) {
 		setName(name);
-		if (!Main.plugin.MoneyData.getConfig().getStringList("Currencys").contains(name)) {
-			List<String> list = Main.plugin.MoneyData.getConfig().getStringList("Currencys");
-			list.add(Name);
-			Main.plugin.MoneyData.getConfig().set("Currencys", list);
+		if (!Main.plugin.moneyData.getConfig().getStringList("Currencys").contains(name)) {
+			List<String> list = Main.plugin.moneyData.getConfig().getStringList("Currencys");
+			list.add(name);
+			Main.plugin.moneyData.getConfig().set("Currencys", list);
 		}
-		Double Max = Main.plugin.MoneyConfig.getConfig().getDouble(pathMaxMoney());
-		if (Max == 0) {
+		Double max = Main.plugin.moneyConfig.getConfig().getDouble(pathMaxMoney());
+		if (!Main.plugin.moneyConfig.getConfig().contains(pathMaxMoney())) {
 			setMaxMoney(new Currency("").getMaxMoney());
 		} else {
-			setMaxMoney(Max);
+			setMaxMoney(max);
 		}
-		Double Min = Main.plugin.MoneyConfig.getConfig().getDouble(pathMinMoney());
-		if (!Main.plugin.MoneyConfig.getConfig().contains(pathMinMoney())) {
+		Double min = Main.plugin.moneyConfig.getConfig().getDouble(pathMinMoney());
+		if (!Main.plugin.moneyConfig.getConfig().contains(pathMinMoney())) {
 			setMinMoney(new Currency("").getMinMoney());
 		} else {
-			setMinMoney(Min);
+			setMinMoney(min);
 		}
-		String symbol = Main.plugin.MoneyConfig.getConfig().getString(pathCurrencySymbol());
+		String symbol = Main.plugin.moneyConfig.getConfig().getString(pathCurrencySymbol());
 		if (symbol == null) {
 			setCurrencySymbol(new Currency("").getCurrencySymbol());
 		} else {
@@ -43,7 +43,7 @@ public class Currency {
 	 * @return the name
 	 */
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	/**
@@ -51,52 +51,58 @@ public class Currency {
 	 */
 	private void setName(String name) {
 		if (name == null || name.isEmpty()) {
-			Name = "Default";
+			this.name = "Default";
 			return;
 		}
-		Name = name;
+		this.name = name;
 	}
 	
 	private String pathMaxMoney() {
-		return Name + ".max-money";
+		return name + ".max-money";
 	}
 	
 	public double getMaxMoney() {
-		return MaxMoney;
+		return maxMoney;
 	}
 	
 	public void setMaxMoney(double max) {
-		this.MaxMoney = max;
-		Main.plugin.MoneyConfig.getConfig().set(pathMaxMoney(), max);
-		Main.plugin.MoneyConfig.saveConfig();
+		this.maxMoney = max;
+		Main.plugin.moneyConfig.getConfig().set(pathMaxMoney(), max);
+		Main.plugin.moneyConfig.saveConfig();
 	}
 	
 	private String pathMinMoney() {
-		return Name + ".min-money";
+		return name + ".min-money";
 	}
 	
 	public double getMinMoney() {
-		return MinMoney;
+		return minMoney;
 	}
 	
 	public void setMinMoney(double min) {
-		this.MinMoney = min;
-		Main.plugin.MoneyConfig.getConfig().set(pathMinMoney(), min);
-		Main.plugin.MoneyConfig.saveConfig();
+		this.minMoney = min;
+		Main.plugin.moneyConfig.getConfig().set(pathMinMoney(), min);
+		Main.plugin.moneyConfig.saveConfig();
 	}
 	
 	private String pathCurrencySymbol() {
-		return Name + ".currency-symbol";
+		return name + ".currency-symbol";
 	}
 	
 	public String getCurrencySymbol() {
-		return Symbol;
+		return symbol;
 	}
 	
 	public void setCurrencySymbol(String currencySymbol) {
-		this.Symbol = currencySymbol;
-		Main.plugin.MoneyConfig.getConfig().set(pathCurrencySymbol(), currencySymbol);
-		Main.plugin.MoneyConfig.saveConfig();
+		this.symbol = currencySymbol;
+		Main.plugin.moneyConfig.getConfig().set(pathCurrencySymbol(), currencySymbol);
+		Main.plugin.moneyConfig.saveConfig();
 	}
-
+	
+	/**
+	 * @return currncy's name
+	 */
+	public String toString() {
+		return name;
+	}
 }

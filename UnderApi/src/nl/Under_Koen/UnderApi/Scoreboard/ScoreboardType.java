@@ -14,28 +14,28 @@ public enum ScoreboardType {
 	AIR("air"),
 	ARMOR("armor");
 	
-	private String Type;
-	private Currency Currency;
+	private String type;
+	private Currency currency;
 	
 	ScoreboardType(String type) {
-		this.Type = type;
+		this.type = type;
 	}
 	
 	public String getType() {
-		return Type;
+		return type;
 	}
 	
 	/**
 	 * only works with MONEY
 	 */
 	public void setCurrency(Currency c) {
-		this.Currency = c;
+		this.currency = c;
 	}
 	
 	/**
 	 * only works with MONEY
 	 */
 	public Currency getCurrency() {
-		return Currency;
+		return currency;
 	}
 }

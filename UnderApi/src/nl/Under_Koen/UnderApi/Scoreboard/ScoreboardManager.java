@@ -13,10 +13,10 @@ import nl.Under_Koen.UnderApi.UnderApi;
 
 class ScoreboardManager {
 	
-	private Scoreboard Scoreboard;
-	private Objective Objective; 
-	private DisplaySlot DisplaySlot;
-	private Player Player;
+	private Scoreboard scoreboard;
+	private Objective objective; 
+	private DisplaySlot displaySlot;
+	private Player player;
 	
 	public ScoreboardManager (DisplaySlot displaySlot, Player player) {
 		setDisplaySlot(displaySlot);
@@ -52,59 +52,59 @@ class ScoreboardManager {
 	 * @return the scoreboard
 	 */
 	public Scoreboard getScoreboard() {
-		return Scoreboard;
+		return scoreboard;
 	}
 
 	/**
 	 * @param scoreboard the scoreboard to set
 	 */
 	protected void setScoreboard(Scoreboard scoreboard) {
-		Scoreboard = scoreboard;
+		this.scoreboard = scoreboard;
 	}
 
 	/**
 	 * @return the objective
 	 */
 	protected Objective getObjective() {
-		return Objective;
+		return this.objective;
 	}
 
 	/**
 	 * @param objective the objective to set
 	 */
 	protected void setObjective(Objective objective) {
-		Objective = objective;
+		this.objective = objective;
 	}
 
 	/**
 	 * @return the player
 	 */
 	public Player getPlayer() {
-		return Player;
+		return player;
 	}
 
 	/**
 	 * @param player the player to set
 	 */
 	private void setPlayer(Player player) {
-		Player = player;
+		this.player = player;
 	}
 
 	/**
 	 * @return the displaySlot
 	 */
 	public DisplaySlot getDisplaySlot() {
-		return DisplaySlot;
+		return displaySlot;
 	}
 
 	/**
 	 * @param displaySlot the displaySlot to set
 	 */
 	private void setDisplaySlot(DisplaySlot displaySlot) {
-		DisplaySlot = displaySlot;
+		this.displaySlot = displaySlot;
 	}
 	
-	public void Hide() {
+	public void hide() {
 		getPlayer().getScoreboard().clearSlot(getDisplaySlot());
 	}
 }

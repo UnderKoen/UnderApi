@@ -14,9 +14,9 @@ public class TabCompleteHandler implements TabCompleter{
 
 	@Override
 	public List<String> onTabComplete(CommandSender s, Command cmd, String alias, String[] args) {
-		ConfigurationSection commands = Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands");
+		ConfigurationSection commands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands");
 		for (String cmdName : commands.getKeys(false)) {
-			ConfigurationSection subcommands = Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection("Commands."+cmdName);
+			ConfigurationSection subcommands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands."+cmdName);
 			if (cmd.getLabel().equalsIgnoreCase(cmdName)) {
 				String beforeArg = null;
 				if (!(args.length <= 1)) {
@@ -36,11 +36,11 @@ public class TabCompleteHandler implements TabCompleter{
 							path = path + "." + arg;
 						}
 					}
-					if (Main.plugin.TabCompleteCommands.getConfig().contains(subcommands.getCurrentPath() + path)) {
-						if (Main.plugin.TabCompleteCommands.getConfig().getBoolean(subcommands.getCurrentPath() + path)) {
+					if (Main.plugin.tabCompleteCommands.getConfig().contains(subcommands.getCurrentPath() + path)) {
+						if (Main.plugin.tabCompleteCommands.getConfig().getBoolean(subcommands.getCurrentPath() + path)) {
 							return null;
 						}
-						subcommands = Main.plugin.TabCompleteCommands.getConfig().getConfigurationSection(subcommands.getCurrentPath() + path);
+						subcommands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection(subcommands.getCurrentPath() + path);
 						List<String> list = new ArrayList<>();
 						for (String subCommands : subcommands.getKeys(false)) {
 							list.add(subCommands);

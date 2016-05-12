@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import nl.Under_Koen.UnderApi.Main;
 
 public class Area {
-	private Location Spawn;
-	private String Name;
-	private ArrayList<OfflinePlayer> Players;
-	private ArrayList<String> PlayersUUID;
+	private Location spawn;
+	private String name;
+	private ArrayList<OfflinePlayer> players;
+	private ArrayList<String> playersUUID;
 	
 	
 	/**
@@ -38,98 +38,98 @@ public class Area {
 	 * @return the location
 	 */
 	public Location getSpawn() {
-		return Spawn;
+		return spawn;
 	}
 
 	/**
 	 * @param spawn the location to set
 	 */
 	public void setSpawn(Location spawn) {
-		Spawn = spawn;
-		Main.plugin.AreaData.getConfig().set(Name + ".Spawn.X", Spawn.getBlockX());
-		Main.plugin.AreaData.getConfig().set(Name + ".Spawn.Y", Spawn.getBlockY());
-		Main.plugin.AreaData.getConfig().set(Name + ".Spawn.Z", Spawn.getBlockZ());
-		Main.plugin.AreaData.getConfig().set(Name + ".Spawn.World", Spawn.getWorld().getName());
-		Main.plugin.AreaData.saveConfig();
+		this.spawn = spawn;
+		Main.plugin.areaData.getConfig().set(name + ".Spawn.X", spawn.getBlockX());
+		Main.plugin.areaData.getConfig().set(name + ".Spawn.Y", spawn.getBlockY());
+		Main.plugin.areaData.getConfig().set(name + ".Spawn.Z", spawn.getBlockZ());
+		Main.plugin.areaData.getConfig().set(name + ".Spawn.World", spawn.getWorld().getName());
+		Main.plugin.areaData.saveConfig();
 	}
 
 	/**
 	 * @return the name
 	 */
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	/**
 	 * @param name the name to set
 	 */
 	private void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	/**
 	 * @return the players
 	 */
 	public ArrayList<OfflinePlayer> getPlayers() {
-		return Players;
+		return players;
 	}
 	
 	/**
 	 * @param players the players to set
 	 */
 	private void setPlayers(ArrayList<OfflinePlayer> players) {
-		Players = players;
-		PlayersUUID = new ArrayList<String>();
-		if (Players == null || Players.isEmpty()) {
-			Main.plugin.AreaData.getConfig().set(Name +".Players", PlayersUUID);
-			Main.plugin.AreaData.saveConfig();
+		this.players = players;
+		this.playersUUID = new ArrayList<String>();
+		if (players == null || players.isEmpty()) {
+			Main.plugin.areaData.getConfig().set(name +".Players", playersUUID);
+			Main.plugin.areaData.saveConfig();
 			return;
 		}
-		for (OfflinePlayer p:Players) {
-			PlayersUUID.add(p.getUniqueId().toString());
+		for (OfflinePlayer p:players) {
+			playersUUID.add(p.getUniqueId().toString());
 		}
-		Main.plugin.AreaData.getConfig().set(Name +".Players", PlayersUUID);
-		Main.plugin.AreaData.saveConfig();
+		Main.plugin.areaData.getConfig().set(name +".Players", playersUUID);
+		Main.plugin.areaData.saveConfig();
 	}
 
 	/**
 	 * @param players the players to add
 	 */
-	public void addPlayer(Player players) {
-		Players.add(players);
-		PlayersUUID.add(players.getUniqueId().toString());
-		Main.plugin.AreaData.getConfig().set(Name + ".Players", PlayersUUID);
-		Main.plugin.AreaData.saveConfig();
+	public void addPlayer(Player player) {
+		players.add(player);
+		playersUUID.add(player.getUniqueId().toString());
+		Main.plugin.areaData.getConfig().set(name + ".Players", playersUUID);
+		Main.plugin.areaData.saveConfig();
 	}
 	
 	/**
 	 * @param players the players to add
 	 */
-	public void addPlayer(OfflinePlayer players) {
-		Players.add(players);
-		PlayersUUID.add(players.getUniqueId().toString());
-		Main.plugin.AreaData.getConfig().set(Name + ".Players", PlayersUUID);
-		Main.plugin.AreaData.saveConfig();
+	public void addPlayer(OfflinePlayer player) {
+		players.add(player);
+		playersUUID.add(player.getUniqueId().toString());
+		Main.plugin.areaData.getConfig().set(name + ".Players", playersUUID);
+		Main.plugin.areaData.saveConfig();
 	}
 	
 	/**
 	 * @param players the players to remove
 	 */
-	public void removePlayer(Player players) {
-		Players.remove(players);
-		PlayersUUID.remove(players.getUniqueId().toString());
-		Main.plugin.AreaData.getConfig().set(Name + ".Players", PlayersUUID);
-		Main.plugin.AreaData.saveConfig();
+	public void removePlayer(Player player) {
+		players.remove(players);
+		playersUUID.remove(player.getUniqueId().toString());
+		Main.plugin.areaData.getConfig().set(name + ".Players", playersUUID);
+		Main.plugin.areaData.saveConfig();
 	}
 	
 	/**
 	 * @param players the players to remove
 	 */
-	public void removePlayer(OfflinePlayer players) {
-		Players.remove(players);
-		PlayersUUID.remove(players.getUniqueId().toString());
-		Main.plugin.AreaData.getConfig().set(Name + ".Players", PlayersUUID);
-		Main.plugin.AreaData.saveConfig();
+	public void removePlayer(OfflinePlayer player) {
+		players.remove(player);
+		playersUUID.remove(player.getUniqueId().toString());
+		Main.plugin.areaData.getConfig().set(name + ".Players", playersUUID);
+		Main.plugin.areaData.saveConfig();
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public class Area {
 	 * @return true if the player is in area
 	 */
 	 public Boolean isInArea(OfflinePlayer player) {
-		 for (OfflinePlayer p:Players) {
+		 for (OfflinePlayer p:players) {
 				if (p == player) {
 					return true;
 				}
@@ -149,16 +149,20 @@ public class Area {
 	 * @return Area Name + "; " + Location + "; " + Players
 	 */
 	public String toString() {
-		String players = "";
-		for (OfflinePlayer p : Players) {
-			if (players.isEmpty()) {
-				players = players + p.getName();
+		StringBuilder playerBuilder = new StringBuilder();
+		for (OfflinePlayer p : players) {
+			if (playerBuilder.length() == 0) {
+				playerBuilder.append(p.getName());
 			} else {
-				players = players + ", " + p.getName();
+				playerBuilder.append(", ").append(p.getName());
 			}
 		}
 		
-		return Name + "; " + Spawn.getBlockX() + ", " + Spawn.getBlockY() + ", " +
-		Spawn.getBlockZ() + ", '" + Spawn.getWorld().getName() + "'; ";
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(name).append("; ").append(spawn.getBlockX()).append(", ").append(spawn.getBlockY()).append(", ")
+		.append(spawn.getBlockZ()).append(", '").append(spawn.getWorld().getName()).append("'; ").append(playerBuilder);
+		
+		return sb.toString();
 	}
 }

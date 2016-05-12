@@ -18,25 +18,23 @@ public class FakeSidebarManager extends ScoreboardManager {
 		getObjective().setDisplayName(name);
 	}
 	
-	private HashMap<Integer, String> Score = new HashMap<Integer, String>();
-	private HashMap<Integer, String> Lines = new HashMap<Integer, String>();
+	private HashMap<Integer, String> lines = new HashMap<Integer, String>();
 	
 	public String getLine(int line) {
-		if (Lines.containsKey(line)) {
-			return Lines.get(line);
+		if (lines.containsKey(line)) {
+			return lines.get(line);
 		} else {
 			return null;
 		}
 	}
 	
 	public HashMap<Integer, String> getLines() {
-		return Lines;
+		return lines;
 	}
 	
 	public void setLine(int line, String text) {
 		removeLine(line);
-		Score.put(line, text);
-		Lines.put(line, text);
+		lines.put(line, text);
 		String newText = text;
 		for(int i=0 ; (getObjective().getScore(newText).getScore() != 0) ; i++) {
 			newText = "§" + i + "§r" + text;
@@ -53,7 +51,7 @@ public class FakeSidebarManager extends ScoreboardManager {
 		}
 		int befor = 0;
 		int available = 0;
-		for (int i: Score.keySet()) {
+		for (int i: lines.keySet()) {
 			if (i - befor == 2) {
 				available = befor+1;
 				break;
@@ -61,16 +59,15 @@ public class FakeSidebarManager extends ScoreboardManager {
 			befor = i;
 		}
 		if (available == 0) {
-			available = Score.size()+1;
+			available = lines.size()+1;
 		}
 		setLine(available, text);
 	}
 	
 	public void removeLine(int line) {
-		if (Score.containsKey(line)) {
-			getScoreboard().resetScores(Score.get(line));
-			Score.remove(line);
-			Lines.remove(line);
+		if (lines.containsKey(line)) {
+			getScoreboard().resetScores(lines.get(line));
+			lines.remove(line);
 		}
 	}
 	

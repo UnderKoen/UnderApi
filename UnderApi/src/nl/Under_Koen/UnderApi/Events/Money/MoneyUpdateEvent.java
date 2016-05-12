@@ -8,11 +8,11 @@ import nl.Under_Koen.UnderApi.Money.Currency;
 
 public class MoneyUpdateEvent extends OfflinePlayerEvent{
 	
-	public Currency Currency;
+	public Currency currency;
 	
 	public MoneyUpdateEvent (OfflinePlayer offlinePlayer, Currency c) {
 		super(offlinePlayer);
-		this.Currency = c;
+		this.currency = c;
 	}
 
 	private static final HandlerList handlers = new HandlerList();
@@ -26,7 +26,7 @@ public class MoneyUpdateEvent extends OfflinePlayerEvent{
 	}
 	
 	public Currency getCurrency() {
-		return Currency;
+		return currency;
 	}
 
 }

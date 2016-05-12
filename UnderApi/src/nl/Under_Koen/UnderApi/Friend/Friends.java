@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 import nl.Under_Koen.UnderApi.Main;
 
 public class Friends {
-	private Player Player;
-	private ArrayList<OfflinePlayer> Friends;
-	private ArrayList<String> FriendsUUID;
+	private Player player;
+	private ArrayList<OfflinePlayer> friends;
+	private ArrayList<String> friendsUUID;
 	
 	/**
 	* @param player the player
@@ -32,79 +32,79 @@ public class Friends {
 	 * @return the player
 	 */
 	public Player getPlayer() {
-		return Player;
+		return player;
 	}
 
 	/**
 	 * @param player the player to set
 	 */
 	private void setPlayer(Player player) {
-		Player = player;
+		this.player = player;
 	}
 
 	/**
 	 * @return the friends
 	 */
 	public ArrayList<OfflinePlayer> getFriends() {
-		return Friends;
+		return friends;
 	}
 
 	/**
 	 * @param friends the friends to set
 	 */
 	public void setFriends(ArrayList<OfflinePlayer> friends) {
-		Friends = friends;
-		FriendsUUID = new ArrayList<String>();
-		if (Friends == null || Friends.isEmpty()) {
-			Main.plugin.FriendData.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
-			Main.plugin.FriendData.saveConfig();
+		this.friends = friends;
+		this.friendsUUID = new ArrayList<String>();
+		if (friends == null || friends.isEmpty()) {
+			Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+			Main.plugin.friendData.saveConfig();
 			return;
 		}
-		for (OfflinePlayer p:Friends) {
-			FriendsUUID.add(p.getUniqueId().toString());
+		for (OfflinePlayer p:friends) {
+			friendsUUID.add(p.getUniqueId().toString());
 		}
-		Main.plugin.FriendData.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.FriendData.saveConfig();
+		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		Main.plugin.friendData.saveConfig();
 	}
 	
 	/**
 	 * @param friend the friend to add
 	 */
 	public void addFriend(OfflinePlayer friend) {
-		Friends.add(friend);
-		FriendsUUID.add(friend.getUniqueId().toString());
-		Main.plugin.FriendData.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.FriendData.saveConfig();
+		friends.add(friend);
+		friendsUUID.add(friend.getUniqueId().toString());
+		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		Main.plugin.friendData.saveConfig();
 	}
 	
 	/**
 	 * @param friend the friend to add
 	 */
 	public void addFriend(Player friend) {
-		Friends.add((OfflinePlayer) friend);
-		FriendsUUID.add(friend.getUniqueId().toString());
-		Main.plugin.FriendData.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.FriendData.saveConfig();
+		friends.add((OfflinePlayer) friend);
+		friendsUUID.add(friend.getUniqueId().toString());
+		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		Main.plugin.friendData.saveConfig();
 	}
 	
 	/**
 	 * @param friend the friend to remove
 	 */
 	public void removeFriend(OfflinePlayer friend) {
-		Friends.remove(friend);
-		FriendsUUID.remove(friend.getUniqueId().toString());
-		Main.plugin.FriendData.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.FriendData.saveConfig();
+		friends.remove(friend);
+		friendsUUID.remove(friend.getUniqueId().toString());
+		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		Main.plugin.friendData.saveConfig();
 	}
 	
 	/**
 	 * @param friend the friend to remove
 	 */
 	public void removeFriend(Player friend) {
-		Friends.remove((OfflinePlayer) friend);
-		FriendsUUID.remove(friend.getUniqueId().toString());
-		Main.plugin.FriendData.getConfig().set(Player.getUniqueId()+".Friends", FriendsUUID);
-		Main.plugin.FriendData.saveConfig();
+		friends.remove((OfflinePlayer) friend);
+		friendsUUID.remove(friend.getUniqueId().toString());
+		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		Main.plugin.friendData.saveConfig();
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class Friends {
 	 * @return True if player is in friend list
 	 */
 	public boolean isFriend(Player player) {
-		for (OfflinePlayer p:Friends) {
+		for (OfflinePlayer p:friends) {
 			if (p == player) {
 				return true;
 			}
@@ -124,13 +124,17 @@ public class Friends {
 	 * @return Player name + "; " + friends
 	 */
 	public String toString() {
-		String friends = "";
-		for (OfflinePlayer p:Friends) {
-			friends = friends + p.getName() + ", ";
+		StringBuilder sb = new StringBuilder();
+		sb.append(player.getName()).append("; ");
+		StringBuilder friendBuilder = new StringBuilder();
+		for (OfflinePlayer p:friends) {
+			friendBuilder.append(p.getName()).append(", ");
 		}
-		if (friends.length() != 0) {
-			friends = friends.substring(0, friends.length()-2);
+		if (friendBuilder.length() != 0) {
+			friendBuilder.substring(0, friendBuilder.length()-2);
 		}
-		return Player.getName()+"; "+friends;
+		
+		sb.append(friendBuilder);
+		return sb.toString();
 	}
 }

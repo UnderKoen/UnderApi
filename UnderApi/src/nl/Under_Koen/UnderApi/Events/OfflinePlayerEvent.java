@@ -6,18 +6,18 @@ import org.bukkit.event.HandlerList;
 
 public class OfflinePlayerEvent extends Event{
 
-	private OfflinePlayer Player;
+	private OfflinePlayer player;
 	
 	public OfflinePlayerEvent(OfflinePlayer player) {
 		setPlayer(player);
 	}
 
 	public OfflinePlayer getPlayer() {
-		return Player;
+		return player;
 	}
 
 	public void setPlayer(OfflinePlayer player) {
-		Player = player;
+		this.player = player;
 	}
 	
 	private static final HandlerList handlers = new HandlerList();

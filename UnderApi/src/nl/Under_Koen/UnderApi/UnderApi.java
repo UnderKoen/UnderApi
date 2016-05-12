@@ -25,15 +25,15 @@ public class UnderApi {
 	 * @return the area
 	 */
 	public static Area getArea(String name) {
-		String test = Main.plugin.AreaData.getConfig().getString(name+".Spawn.X");
+		String test = Main.plugin.areaData.getConfig().getString(name+".Spawn.X");
 		if (test == "" || test == null || test.isEmpty()) {
 			return null;
 		}
-		int X = Main.plugin.AreaData.getConfig().getInt(name + ".Spawn.X");
-		int Y = Main.plugin.AreaData.getConfig().getInt(name + ".Spawn.Y");
-		int Z = Main.plugin.AreaData.getConfig().getInt(name + ".Spawn.Z");
-		World World = Bukkit.getWorld(Main.plugin.AreaData.getConfig().getString(name + ".Spawn.World"));
-		List<String> UUIDplayers = Main.plugin.AreaData.getConfig().getStringList(name + ".Players");
+		int X = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.X");
+		int Y = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.Y");
+		int Z = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.Z");
+		World World = Bukkit.getWorld(Main.plugin.areaData.getConfig().getString(name + ".Spawn.World"));
+		List<String> UUIDplayers = Main.plugin.areaData.getConfig().getStringList(name + ".Players");
 		ArrayList<OfflinePlayer> players = new ArrayList<OfflinePlayer>(); 
 		for (String p: UUIDplayers) {
 			players.add(Bukkit.getOfflinePlayer(UUID.fromString(p)));
@@ -46,7 +46,7 @@ public class UnderApi {
 	 * @return the friends of the player
 	 */
 	public static Friends getFriends(Player player) {
-		List<String> Ufriends = Main.plugin.FriendData.getConfig().getStringList(player.getUniqueId()+".Friends");
+		List<String> Ufriends = Main.plugin.friendData.getConfig().getStringList(player.getUniqueId()+".Friends");
 		if (Ufriends.isEmpty() || Ufriends == null) {
 			return new Friends(player);
 		}
@@ -81,6 +81,7 @@ public class UnderApi {
 					sm.setLine(-ob.getScore(name).getScore(), name);
 				}
 			}
+			sm.setDisplayName(ob.getDisplayName());
 		}
 		return sm;
 	}

@@ -9,40 +9,40 @@ import nl.Under_Koen.UnderApi.Money.Currency;
 
 public class MoneyChangeEvent extends OfflinePlayerEvent implements Cancellable{
 
-	private double OldMoney;
-	private double NewMoney;
+	private double oldMoney;
+	private double newMoney;
 	
 	
-	private Currency Currency;
+	private Currency currency;
 	
-	protected Boolean Cancelled;
+	protected Boolean cancelled;
 	
 	public MoneyChangeEvent(double oldMoney, double newMoney, Currency currency, OfflinePlayer player) {
 		super(player);
 		setOldMoney(oldMoney);
 		setNewMoney(newMoney);
-		this.Currency = currency;
+		this.currency = currency;
 		setCancelled(false);
 	}
 	
 	public Currency getCurrency() {
-		return Currency;
+		return currency;
 	}
 	
 	public double getOldMoney() {
-		return OldMoney;
+		return oldMoney;
 	}
 
 	public void setOldMoney(double oldMoney) {
-		this.OldMoney = oldMoney;
+		this.oldMoney = oldMoney;
 	}
 
 	public double getNewMoney() {
-		return NewMoney;
+		return newMoney;
 	}
 
 	public void setNewMoney(double newMoney) {
-		this.NewMoney = newMoney;
+		this.newMoney = newMoney;
 	}
 	
 	private static final HandlerList handlers = new HandlerList();
@@ -57,7 +57,7 @@ public class MoneyChangeEvent extends OfflinePlayerEvent implements Cancellable{
 
 	@Override
 	public boolean isCancelled() {
-		return Cancelled;
+		return cancelled;
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class MoneyChangeEvent extends OfflinePlayerEvent implements Cancellable{
 		if (cancelled) {
 			setNewMoney(getOldMoney());
 		}
-		Cancelled = cancelled;
+		this.cancelled = cancelled;
 		
 	}
 }

@@ -6,11 +6,11 @@ import nl.Under_Koen.UnderApi.Money.Currency;
 
 public class MoneyPayEvent extends MoneyChangeEvent {
 	
-	public OfflinePlayer Player2;
+	public OfflinePlayer player2;
 	
-	public Double NewMoneyP2;
-	public Double OldMoneyP2;
-	public Double Payment;
+	public Double newMoneyP2;
+	public Double oldMoneyP2;
+	public Double payment;
 
 	public MoneyPayEvent(double oldMoneyP1, double newMoneyP1, OfflinePlayer offlinePlayer, double oldMoneyP2, double newMoneyP2, OfflinePlayer player22,
 			Currency currency, double payment) {
@@ -22,35 +22,35 @@ public class MoneyPayEvent extends MoneyChangeEvent {
 	}
 	
 	public Double getPayment() {
-		return Payment;
+		return payment;
 	}
 
 	public void setPayment(Double payment) {
-		Payment = payment;
+		this.payment = payment;
 	}
 
 	public OfflinePlayer getPlayer2() {
-		return Player2;
+		return player2;
 	}
 
 	private void setPlayer2(OfflinePlayer player2) {
-		Player2 = player2;
+		this.player2 = player2;
 	}
 
 	public Double getNewMoneyP2() {
-		return NewMoneyP2;
+		return newMoneyP2;
 	}
 
 	public void setNewMoneyP2(Double newMoneyP2) {
-		NewMoneyP2 = newMoneyP2;
+		this.newMoneyP2 = newMoneyP2;
 	}
 
 	public Double getOldMoneyP2() {
-		return OldMoneyP2;
+		return oldMoneyP2;
 	}
 
 	private void setOldMoneyP2(Double oldMoneyP2) {
-		OldMoneyP2 = oldMoneyP2;
+		this.oldMoneyP2 = oldMoneyP2;
 	}
 
 	@Override
@@ -59,6 +59,6 @@ public class MoneyPayEvent extends MoneyChangeEvent {
 			setNewMoney(getOldMoney());
 			setNewMoneyP2(getOldMoneyP2());
 		}
-		Cancelled = cancelled;
+		this.cancelled = cancelled;
 	}
 }

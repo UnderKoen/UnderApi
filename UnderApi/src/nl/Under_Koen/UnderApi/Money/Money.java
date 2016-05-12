@@ -2,7 +2,6 @@ package nl.Under_Koen.UnderApi.Money;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.omg.CORBA.DynAnyPackage.InvalidValue;
 
 import nl.Under_Koen.UnderApi.Main;
 import nl.Under_Koen.UnderApi.UnderApi;
@@ -18,30 +17,30 @@ public class Money {
 	public Money (OfflinePlayer player, Currency currency) {
 		setPlayer(player);
 		setCurrency(currency);
-		double money = Main.plugin.MoneyData.getConfig().getDouble(pathMoney());
-		Money = money;
-		Main.plugin.MoneyData.getConfig().set(pathMoney(), money);
-		Main.plugin.MoneyData.saveConfig();
+		double money = Main.plugin.moneyData.getConfig().getDouble(pathMoney());
+		this.money = money;
+		Main.plugin.moneyData.getConfig().set(pathMoney(), money);
+		Main.plugin.moneyData.saveConfig();
 	}
 	
-	public OfflinePlayer Player;
+	public OfflinePlayer player;
 	
 	public OfflinePlayer getPlayer() {
-		return Player;
+		return player;
 	}
 
 	private void setPlayer(OfflinePlayer player) {
-		Player = player;
+		this.player = player;
 	}
 	
-	public Currency Currency;
+	public Currency currency;
 	
 	public Currency getCurrency() {
-		return Currency;
+		return currency;
 	}
 
 	private void setCurrency(Currency currency) {
-		Currency = currency;
+		this.currency = currency;
 	}
 
 	private String pathMoney() {
@@ -68,36 +67,51 @@ public class Money {
 		double newMoney = getMoney() - sub;
 		MoneyRemoveEvent event = new MoneyRemoveEvent(getMoney(), newMoney, getCurrency(), getPlayer());
 		Bukkit.getServer().getPluginManager().callEvent(event);
-		saveMoney(event.getNewMoney());
+		saveMoney(event.getNewMoney()); 
 	}
 	
-	public void payMoney(OfflinePlayer player2, double payment) throws InvalidValue {
+	/**
+	 * 
+	 * @param player2
+	 * @param payment
+	 * @throws RuntimeException
+	 */
+	public void payMoney(OfflinePlayer player2, double payment) {
 		if (player2 == getPlayer()) {
-			throw new InvalidValue("Can't pay yourself");
+			throw new RuntimeException("Can't pay yourself");
 		}
-		double currentP = Main.plugin.MoneyData.getConfig().getDouble(pathMoney());
+		double currentP = Main.plugin.moneyData.getConfig().getDouble(pathMoney());
 		double currentP2 = UnderApi.getMoney(player2, getCurrency()).getMoney();
 		double newMoneyP = currentP - payment;
 		double newMoneyP2 = currentP2 + payment;
 		MoneyPayEvent event = new MoneyPayEvent(currentP, newMoneyP, getPlayer(), currentP2, newMoneyP2, player2, getCurrency(), payment);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 		saveMoney(event.getNewMoney());
-		MoneyChangeEvent event2 = new MoneyChangeEvent(event.OldMoneyP2, event.NewMoneyP2, getCurrency(), event.getPlayer2());
+		MoneyChangeEvent event2 = new MoneyChangeEvent(event.oldMoneyP2, event.newMoneyP2, getCurrency(), event.getPlayer2());
 		Bukkit.getServer().getPluginManager().callEvent(event2);
 		UnderApi.getMoney(player2, getCurrency()).saveMoney(event.getNewMoneyP2());
 	}
 	
-	private double Money;
+	private double money;
 	
 	public double getMoney() {
-		return Money;
+		return money;
 	}
 	
 	private void saveMoney(Double money) {
-		Money = money;
-		Main.plugin.MoneyData.getConfig().set(pathMoney(), money);
-		Main.plugin.MoneyData.saveConfig();
+		this.money = money;
+		Main.plugin.moneyData.getConfig().set(pathMoney(), money);
+		Main.plugin.moneyData.saveConfig();
 		MoneyUpdateEvent event = new MoneyUpdateEvent(getPlayer(), getCurrency());
 		Bukkit.getServer().getPluginManager().callEvent(event);
+	}
+	
+	/**
+	 * @return money + "; " + currency
+	 */
+	public String toString() {
+		StringBuilder sb =  new StringBuilder();
+		sb.append(money).append("; ").append(currency);
+		return sb.toString();
 	}
 }
