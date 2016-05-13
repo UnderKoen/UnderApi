@@ -1,5 +1,6 @@
 package nl.Under_Koen.UnderApi.Money;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import nl.Under_Koen.UnderApi.Main;
@@ -9,8 +10,8 @@ public class Currency {
 	private String name;
 	private String symbol;
 	
-	private Double maxMoney;
-	private Double minMoney;
+	private Long maxMoney;
+	private Long minMoney;
 	
 	public Currency(String name) {
 		setName(name);
@@ -19,16 +20,16 @@ public class Currency {
 			list.add(name);
 			Main.plugin.moneyData.getConfig().set("Currencys", list);
 		}
-		Double max = Main.plugin.moneyConfig.getConfig().getDouble(pathMaxMoney());
 		if (!Main.plugin.moneyConfig.getConfig().contains(pathMaxMoney())) {
 			setMaxMoney(new Currency("").getMaxMoney());
 		} else {
+			Long max = Long.valueOf(Main.plugin.moneyConfig.getConfig().getString(pathMaxMoney()));
 			setMaxMoney(max);
 		}
-		Double min = Main.plugin.moneyConfig.getConfig().getDouble(pathMinMoney());
 		if (!Main.plugin.moneyConfig.getConfig().contains(pathMinMoney())) {
 			setMinMoney(new Currency("").getMinMoney());
 		} else {
+			Long min = Long.valueOf(Main.plugin.moneyConfig.getConfig().getString(pathMinMoney()));
 			setMinMoney(min);
 		}
 		String symbol = Main.plugin.moneyConfig.getConfig().getString(pathCurrencySymbol());
@@ -61,13 +62,13 @@ public class Currency {
 		return name + ".max-money";
 	}
 	
-	public double getMaxMoney() {
+	public long getMaxMoney() {
 		return maxMoney;
 	}
 	
-	public void setMaxMoney(double max) {
+	public void setMaxMoney(long max) {
 		this.maxMoney = max;
-		Main.plugin.moneyConfig.getConfig().set(pathMaxMoney(), max);
+		Main.plugin.moneyConfig.getConfig().set(pathMaxMoney(), NumberFormat.getIntegerInstance().format(max).replace(".", ""));
 		Main.plugin.moneyConfig.saveConfig();
 	}
 	
@@ -75,13 +76,13 @@ public class Currency {
 		return name + ".min-money";
 	}
 	
-	public double getMinMoney() {
+	public long getMinMoney() {
 		return minMoney;
 	}
 	
-	public void setMinMoney(double min) {
+	public void setMinMoney(long min) {
 		this.minMoney = min;
-		Main.plugin.moneyConfig.getConfig().set(pathMinMoney(), min);
+		Main.plugin.moneyConfig.getConfig().set(pathMinMoney(), NumberFormat.getIntegerInstance().format(min).replace(".", ""));
 		Main.plugin.moneyConfig.saveConfig();
 	}
 	

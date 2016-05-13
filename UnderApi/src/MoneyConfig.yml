@@ -3,6 +3,6 @@
 # \\__// || || ||=/ ||==  ||        ||  ||  ||     ||
 
 Default:
-  max-money: 10000000000000.0
-  min-money: 0.0
-  currency-symbol: '€'
+  max-money: '10000000000000'
+  min-money: '0'
+  currency-symbol: €
