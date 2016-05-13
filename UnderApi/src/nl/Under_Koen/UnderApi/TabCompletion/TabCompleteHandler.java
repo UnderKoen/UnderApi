@@ -52,4 +52,11 @@ public class TabCompleteHandler implements TabCompleter{
 		}
 		return null;
 	}
+	public static void defaultTab (Main t) {
+		if (Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands") != null ) {
+			for (String s : Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands").getKeys(false)) {
+				t.getCommand(s).setTabCompleter(new TabCompleteHandler());
+			}
+		}
+	}
 }

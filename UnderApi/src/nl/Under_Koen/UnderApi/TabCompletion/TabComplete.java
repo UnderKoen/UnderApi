@@ -11,14 +11,14 @@ public class TabComplete {
 	/**
 	 * @param command the main command
 	 * @param subCommands :
-	 * <h1> all the subCommands named like:</h1>
-	 *   -  1.2.3
+	 * <h1> all the subCommands named like (examples how to looks like in game):</h1>
+	 *   -  1.2.3 (/command 1 2 3)
 	 *   <br>
-	 *   -  1.2.1
+	 *   -  1.2.1 (/command 1 2 1)
 	 *   <br>
-	 *   -  2
+	 *   -  2 (/command 2)
 	 *   <br>
-	 *   -  3.3.1.2
+	 *   -  3.3.1.2 (/command 3 3 1 2)
 	 *   <br><br> you don't need to add 1 because 1.2.3 is already there
 	 */
 	public static void addSubCommands(String command, String[] subCommands) {
@@ -31,18 +31,61 @@ public class TabComplete {
 	/**
 	 * @param command the main command
 	 * @param subCommand :
-	 * <h1> the subCommand named like:</h1>
-	 *   -  1.2.3
+	 * <h1> the subCommand named like (examples how to looks like in game):</h1>
+	 *   -  1.2.3 (/command 1 2 3)
 	 *   <br>
-	 *   -  1.2.1
+	 *   -  1.2.1 (/command 1 2 1)
 	 *   <br>
-	 *   -  2
+	 *   -  2 (/command 2)
 	 *   <br>
-	 *   -  3.3.1.2
-	 *   <br><br> you don't need to add 1 because 1.2.3 is already there
+	 *   -  3.3.1.2 (/command 3 3 1 2)
+	 *   <h2>you don't need to add 1 because 1.2.3 is already there
 	 */
 	public static void addSubCommand(String command, String subCommand) {
 		Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+subCommand, true);
+		Main.plugin.tabCompleteCommands.saveConfig();
+	}
+	
+	/**
+	 * @param command the main command
+	 * @param subCommand :
+	 * <h1> the subCommand named like (examples how to looks like in game):</h1>
+	 *   -  1.2.3 (/command 1 2 3)
+	 *   <br>
+	 *   -  1.2.1 (/command 1 2 1)
+	 *   <br>
+	 *   -  2 (/command 2)
+	 *   <br>
+	 *   -  3.3.1.2 (/command 3 3 1 2)
+	 *  <h2>if you do 1 as subCommand then will 1.2.3 and 1.2.1 also remove
+	 */
+	public static void removeSubCommand(String command, String subCommand) {
+		Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+subCommand, null);
+		Main.plugin.tabCompleteCommands.saveConfig();
+	}
+	
+	/**
+	 * @param command the main command
+	 * @param subCommand :
+	 * <h1> the subCommand named like (examples how to looks like in game):</h1>
+	 *   -  1.2.3 (/command 1 2 3)
+	 *   <br>
+	 *   -  1.2.1 (/command 1 2 1)
+	 *   <br>
+	 *   -  2 (/command 2)
+	 *   <br>
+	 *   -  3.3.1.2 (/command 3 3 1 2)
+	 *  <h2>if you do 1 as subCommand then will 1.2.3 and 1.2.1 also remove
+	 */
+	public static void removeSubCommand(String command, String[] subCommand) {
+		for (String s : subCommand) {
+			Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+s, null);
+		}
+		Main.plugin.tabCompleteCommands.saveConfig();
+	}
+	
+	public static void removeCommand(String command) {
+		Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command, null);
 		Main.plugin.tabCompleteCommands.saveConfig();
 	}
 	

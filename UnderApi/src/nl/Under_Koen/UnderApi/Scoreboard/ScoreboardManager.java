@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import nl.Under_Koen.UnderApi.UnderApi;
 
-class ScoreboardManager {
+public abstract class ScoreboardManager {
 	
 	private Scoreboard scoreboard;
 	private Objective objective; 
