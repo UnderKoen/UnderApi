@@ -77,8 +77,8 @@ public class TabComplete {
 	 *   -  3.3.1.2 (/command 3 3 1 2)
 	 *  <h2>if you do 1 as subCommand then will 1.2.3 and 1.2.1 also remove
 	 */
-	public static void removeSubCommand(String command, String[] subCommand) {
-		for (String s : subCommand) {
+	public static void removeSubCommands(String command, String[] subCommands) {
+		for (String s : subCommands) {
 			Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+s, null);
 		}
 		Main.plugin.tabCompleteCommands.saveConfig();

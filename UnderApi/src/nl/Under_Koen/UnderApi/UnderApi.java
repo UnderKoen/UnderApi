@@ -26,7 +26,7 @@ public class UnderApi {
 	 */
 	public static Area getArea(String name) {
 		String test = Main.plugin.areaData.getConfig().getString(name+".Spawn.X");
-		if (test == "" || test == null || test.isEmpty()) {
+		if (test == null || test.isEmpty()) {
 			return null;
 		}
 		int X = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.X");
@@ -60,10 +60,6 @@ public class UnderApi {
 	
 	public static Money getMoney(OfflinePlayer player, Currency currency) {
 		return new Money(player, currency);
-	}
-	
-	public static Currency getCurrency(String currency) {
-		return new Currency(currency);
 	}
 	
 	public static FakeSidebarManager getFakeSidebarManager(Player p) {
