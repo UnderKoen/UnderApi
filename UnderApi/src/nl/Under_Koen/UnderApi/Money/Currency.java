@@ -9,7 +9,7 @@ public interface Currency {
 	
 	Config config = Main.plugin.moneyConfig;
 	
-	public int getId();
+	int getId();
 	
 	String getName();
 	
@@ -52,7 +52,20 @@ public interface Currency {
 		Main.plugin.moneyConfig.saveConfig();
 	}
 	
-	default void setup() {
+	/**
+	 * Here you can put all your config stuff
+	 * like:
+	 * setMaxMoney(1000000);
+	 * setMinMoney(0);
+	 * setCurrencySymbol("*");
+	 */
+	void onLoad();
+	
+	/**
+	 * do NOT edit this
+	 * use onLoad
+	 */
+	default void onSetup() {
 		config.getConfig().set(getId() + ".name", getName());
 		if (!config.getConfig().contains(pathMaxMoney())) {
 			setMaxMoney(Long.valueOf(config.getConfig().getString("Default.max-money")));
@@ -63,6 +76,7 @@ public interface Currency {
 		if (!config.getConfig().contains(pathCurrencySymbol())) {
 			setCurrencySymbol(config.getConfig().getString("Default.currency-symbol"));
 		}
+		onLoad();
 	}
 	
 	default void toDefault() {

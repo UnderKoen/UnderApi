@@ -13,7 +13,7 @@ public class CurrencyManager {
 				throw new RuntimeException("Can't have the same id");
 			}
 		}
-		currency.setup();
+		currency.onSetup();
 		currencys.add(currency);
 	}
 	

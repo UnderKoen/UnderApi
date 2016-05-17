@@ -5,14 +5,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
-import nl.Under_Koen.UnderApi.Area.Area;
 import nl.Under_Koen.UnderApi.Friend.Friends;
 import nl.Under_Koen.UnderApi.Money.Currency;
 import nl.Under_Koen.UnderApi.Money.Money;
@@ -20,26 +17,6 @@ import nl.Under_Koen.UnderApi.Scoreboard.FakeSidebarManager;
 
 public class UnderApi {
 
-	/**
-	 * @param name name of the area
-	 * @return the area
-	 */
-	public static Area getArea(String name) {
-		String test = Main.plugin.areaData.getConfig().getString(name+".Spawn.X");
-		if (test == null || test.isEmpty()) {
-			return null;
-		}
-		int X = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.X");
-		int Y = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.Y");
-		int Z = Main.plugin.areaData.getConfig().getInt(name + ".Spawn.Z");
-		World World = Bukkit.getWorld(Main.plugin.areaData.getConfig().getString(name + ".Spawn.World"));
-		List<String> UUIDplayers = Main.plugin.areaData.getConfig().getStringList(name + ".Players");
-		ArrayList<OfflinePlayer> players = new ArrayList<OfflinePlayer>(); 
-		for (String p: UUIDplayers) {
-			players.add(Bukkit.getOfflinePlayer(UUID.fromString(p)));
-		}
-		return new Area(new Location(World, X, Y, Z), name, players);
-	}
 	
 	/**
 	 * @param player the player

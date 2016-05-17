@@ -5,6 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import nl.Under_Koen.UnderApi.Area.AreaManager;
+import nl.Under_Koen.UnderApi.Area.Space;
 import nl.Under_Koen.UnderApi.Objectives.MoneyObjective;
 import nl.Under_Koen.UnderApi.TabCompletion.TabCompleteHandler;
 
@@ -27,6 +29,7 @@ public class Main extends JavaPlugin implements Listener{
 		plugin = this;
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new MoneyObjective(), this);
+		getServer().getPluginManager().registerEvents(new AreaManager(), this);
 		for (Config c : configs) {
 			for (Config c2 : defaultConfigs) {
 				if (c2 == c) {
@@ -38,6 +41,7 @@ public class Main extends JavaPlugin implements Listener{
 			c.saveConfig();
 		}
 		TabCompleteHandler.defaultTab();
+		AreaManager.registerCurrency(new Space());
 	}
 	
 	@Override

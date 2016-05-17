@@ -47,7 +47,7 @@ public class Money {
 		if (getCurrency() == null) {
 			return getPlayer().getUniqueId().toString() + ".Default" +".Money";
 		}
-		return getPlayer().getUniqueId().toString() + "." + getCurrency().getName() +".Money";
+		return getPlayer().getUniqueId().toString() + "." + getCurrency().getId() +".Money";
 	}
 	
 	public void setMoney(double money) {
@@ -70,12 +70,6 @@ public class Money {
 		saveMoney(event.getNewMoney()); 
 	}
 	
-	/**
-	 * 
-	 * @param player2
-	 * @param payment
-	 * @throws RuntimeException
-	 */
 	public void payMoney(OfflinePlayer player2, double payment) {
 		if (player2 == getPlayer()) {
 			throw new RuntimeException("Can't pay yourself");
