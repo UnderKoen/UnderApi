@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -18,32 +17,6 @@ public interface Area {
 	int getId();
 
 	String getName();
-	
-	default public void toSpawn(Player player) {
-		player.teleport(getSpawn());
-	}
-	
-	/**
-	 * @return the location
-	 */
-	default public Location getSpawn() {
-		return new Location(Bukkit.getWorld(config.getConfig().getString(getId() + ".Spawn.World")),
-				config.getConfig().getInt(getId() + ".Spawn.X"), 
-				config.getConfig().getInt(getId() + ".Spawn.Y"),
-				config.getConfig().getInt(getId() + ".Spawn.Z"));
-	}
-
-	/**
-	 * @param spawn
-	 *            the location to set
-	 */
-	default public void setSpawn(Location spawn) {
-		config.getConfig().set(getId() + ".Spawn.X", spawn.getBlockX());
-		config.getConfig().set(getId() + ".Spawn.Y", spawn.getBlockY());
-		config.getConfig().set(getId() + ".Spawn.Z", spawn.getBlockZ());
-		config.getConfig().set(getId() + ".Spawn.World", spawn.getWorld().getName());
-		config.saveConfig();
-	}
 
 	/**
 	 * @return the players
@@ -129,13 +102,12 @@ public interface Area {
 	}
 
 	/**
-	 * Here you can put all your config stuff like:
-	 * 
+	 * Here you can put all your config stuff
 	 */
 	void onLoad();
 
 	/**
-	 * do NOT edit this use onLoad
+	 * <h1>do NOT edit this use onLoad
 	 */
 	default void onSetup() {
 		config.getConfig().set(getId() + ".name", getName());
