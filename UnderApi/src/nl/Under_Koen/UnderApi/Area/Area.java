@@ -1,6 +1,7 @@
 package nl.Under_Koen.UnderApi.Area;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,23 +12,25 @@ import nl.Under_Koen.UnderApi.Config;
 import nl.Under_Koen.UnderApi.Main;
 
 public interface Area {
-	
-	//TODO MAKE SOMETHING LIKE CORNERS FOR AREA
 
 	Config config = Main.plugin.areaData;
 
 	int getId();
 
 	String getName();
-
+	
+	default public void toSpawn(Player player) {
+		player.teleport(getSpawn());
+	}
+	
 	/**
 	 * @return the location
 	 */
 	default public Location getSpawn() {
-		return new Location(Bukkit.getWorld(config.getConfig().getString(getName() + ".Spawn.World")),
-				config.getConfig().getInt(getName() + ".Spawn.X"), 
-				config.getConfig().getInt(getName() + ".Spawn.Y"),
-				config.getConfig().getInt(getName() + ".Spawn.Z"));
+		return new Location(Bukkit.getWorld(config.getConfig().getString(getId() + ".Spawn.World")),
+				config.getConfig().getInt(getId() + ".Spawn.X"), 
+				config.getConfig().getInt(getId() + ".Spawn.Y"),
+				config.getConfig().getInt(getId() + ".Spawn.Z"));
 	}
 
 	/**
@@ -35,10 +38,10 @@ public interface Area {
 	 *            the location to set
 	 */
 	default public void setSpawn(Location spawn) {
-		config.getConfig().set(getName() + ".Spawn.X", spawn.getBlockX());
-		config.getConfig().set(getName() + ".Spawn.Y", spawn.getBlockY());
-		config.getConfig().set(getName() + ".Spawn.Z", spawn.getBlockZ());
-		config.getConfig().set(getName() + ".Spawn.World", spawn.getWorld().getName());
+		config.getConfig().set(getId() + ".Spawn.X", spawn.getBlockX());
+		config.getConfig().set(getId() + ".Spawn.Y", spawn.getBlockY());
+		config.getConfig().set(getId() + ".Spawn.Z", spawn.getBlockZ());
+		config.getConfig().set(getId() + ".Spawn.World", spawn.getWorld().getName());
 		config.saveConfig();
 	}
 
@@ -48,7 +51,7 @@ public interface Area {
 	default ArrayList<OfflinePlayer> getPlayers() {
 		ArrayList<OfflinePlayer> players = new ArrayList<OfflinePlayer>();
 		for (String u : config.getConfig().getStringList(getId() + ".Players")) {
-			players.add(Bukkit.getPlayer(u));
+			players.add(Bukkit.getOfflinePlayer(UUID.fromString(u)));
 		}
 		return players;
 	}
@@ -67,7 +70,7 @@ public interface Area {
 	}
 
 	/**
-	 * @param players
+	 * @param player
 	 *            the players to add
 	 */
 	default void addPlayer(Player player) {
@@ -75,10 +78,11 @@ public interface Area {
 	}
 
 	/**
-	 * @param players
+	 * @param player
 	 *            the players to add
 	 */
 	default void addPlayer(OfflinePlayer player) {
+		if (player == null) { return; }
 		ArrayList<OfflinePlayer> players = getPlayers();
 		players.add(player);
 		setPlayers(players);

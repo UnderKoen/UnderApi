@@ -18,7 +18,7 @@ public class AreaManager implements Listener {
 
 	private final static List<Area> areas = new ArrayList<>();
 
-	public static void registerCurrency(Area area) {
+	public static void registerArea(Area area) {
 		for (Area a : areas) {
 			if (area.getId() == a.getId()) {
 				throw new RuntimeException("Can't have the same id");
@@ -46,7 +46,7 @@ public class AreaManager implements Listener {
 		}
 		return null;
 	}
-	
+
 	public static List<Area> getAreas() {
 		return areas;
 	}
@@ -73,24 +73,18 @@ public class AreaManager implements Listener {
 					newFirst.setZ(second.getBlockZ());
 					newSecond.setZ(first.getBlockZ());
 				}
-				for (int x = first.getBlockX(); x <= second.getBlockX(); x++) {
-				    for (int z = first.getBlockZ(); z <= second.getBlockZ(); z++) {
-				        for (int y = first.getBlockY(); y <= second.getBlockY(); y++) {
-				        	if (p.getLocation().distance(new Location(newFirst.getWorld(), x, y, z)) == 0.5) {
-				        		if (!a2.isInArea((OfflinePlayer) p)) {
-									a2.addPlayer(p);
-									PlayerEnterAreaEvent event = new PlayerEnterAreaEvent();
-									Bukkit.getServer().getPluginManager().callEvent(event);
-								}
-				        	} else {
-				        		if (a2.isInArea((OfflinePlayer) p)) {
-									a2.removePlayer(p);
-									PlayerLeaveAreaEvent event = new PlayerLeaveAreaEvent();
-									Bukkit.getServer().getPluginManager().callEvent(event);
-								}
-				        	}
-				        }
-				    }
+				if (p.getLocation().getBlockX() >= newFirst.getBlockX() && p.getLocation().getBlockX() <= newSecond.getBlockX() &&
+						p.getLocation().getBlockZ() >= newFirst.getBlockZ() && p.getLocation().getBlockZ() <= newSecond.getBlockZ() &&
+						p.getLocation().getBlockY() >= newFirst.getBlockY() && p.getLocation().getBlockY() <= newSecond.getBlockY()) {
+					if (!a2.isInArea((OfflinePlayer) p)) {
+						a2.addPlayer(p);
+						PlayerEnterAreaEvent event = new PlayerEnterAreaEvent(p, a);
+						Bukkit.getServer().getPluginManager().callEvent(event);
+					}
+				} else if (a2.isInArea((OfflinePlayer) p)) {
+					a2.removePlayer(p);
+					PlayerLeaveAreaEvent event = new PlayerLeaveAreaEvent(p, a);
+					Bukkit.getServer().getPluginManager().callEvent(event);
 				}
 			}
 		}
