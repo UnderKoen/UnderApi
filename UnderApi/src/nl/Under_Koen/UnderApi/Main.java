@@ -37,7 +37,7 @@ public class Main extends JavaPlugin implements Listener{
 			c.getConfig();
 			c.saveConfig();
 		}
-		TabCompleteHandler.defaultTab(this);
+		TabCompleteHandler.defaultTab();
 	}
 	
 	@Override

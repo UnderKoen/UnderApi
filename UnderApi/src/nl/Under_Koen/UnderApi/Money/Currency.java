@@ -9,16 +9,16 @@ public interface Currency {
 	
 	Config config = Main.plugin.moneyConfig;
 	
+	public int getId();
+	
 	String getName();
 	
-	void setName(String name);
-	
 	default String pathMaxMoney() {
-		return getName() + ".max-money";
+		return getId() + ".max-money";
 	}
 	
 	default long getMaxMoney() {
-		return config.getConfig().getLong(pathMaxMoney());
+		return Long.valueOf(config.getConfig().getString(pathMaxMoney()));
 	};
 	
 	default void setMaxMoney(long max) {
@@ -27,11 +27,11 @@ public interface Currency {
 	}
 	
 	default String pathMinMoney() {
-		return getName() + ".min-money";
+		return getId() + ".min-money";
 	}
 	
 	default long getMinMoney() {
-		return config.getConfig().getLong(pathMinMoney());
+		return Long.valueOf(config.getConfig().getString(pathMinMoney()));
 	}
 	
 	default void setMinMoney(long min) {
@@ -40,7 +40,7 @@ public interface Currency {
 	}
 	
 	default String pathCurrencySymbol() {
-		return getName() + ".currency-symbol";
+		return getId() + ".currency-symbol";
 	}
 	
 	default String getCurrencySymbol() {
@@ -52,9 +52,23 @@ public interface Currency {
 		Main.plugin.moneyConfig.saveConfig();
 	}
 	
+	default void setup() {
+		config.getConfig().set(getId() + ".name", getName());
+		if (!config.getConfig().contains(pathMaxMoney())) {
+			setMaxMoney(Long.valueOf(config.getConfig().getString("Default.max-money")));
+		}
+		if (!config.getConfig().contains(pathMinMoney())) {
+			setMinMoney(Long.valueOf(config.getConfig().getLong("Default.min-money")));
+		}
+		if (!config.getConfig().contains(pathCurrencySymbol())) {
+			setCurrencySymbol(config.getConfig().getString("Default.currency-symbol"));
+		}
+	}
+	
 	default void toDefault() {
-		setMaxMoney(config.getConfig().getLong("Default.max-money"));
-		setMinMoney(config.getConfig().getLong("Default.min-money"));
+		config.getConfig().set(getId() + ".name", getName());
+		setMaxMoney(Long.valueOf(config.getConfig().getString("Default.max-money")));
+		setMinMoney(Long.valueOf(config.getConfig().getLong("Default.min-money")));
 		setCurrencySymbol(config.getConfig().getString("Default.currency-symbol"));
 	}
 
