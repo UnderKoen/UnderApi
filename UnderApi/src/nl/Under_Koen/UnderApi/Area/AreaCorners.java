@@ -6,6 +6,14 @@ import org.bukkit.entity.Player;
 
 public interface AreaCorners extends Area {
 
+	default void ignoreY () {
+		config.getConfig().set(getId() + ".Corners.IgnoreY", true);
+	}
+	
+	default boolean isYIgnored () {
+		return config.getConfig().getBoolean(getId() + ".Corners.IgnoreY");
+	}
+	
 	default public void setFirstCorner(Location corner) {
 		config.getConfig().set(getId() + ".Corners.First.X", corner.getBlockX());
 		config.getConfig().set(getId() + ".Corners.First.Y", corner.getBlockY());

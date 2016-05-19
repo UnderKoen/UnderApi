@@ -79,7 +79,7 @@ public class AreaManager implements Listener {
 				//AreaEnter
 				if (e.getTo().getX() >= newFirst.getBlockX() && e.getTo().getX() <= newSecond.getBlockX()
 						&& e.getTo().getZ() >= newFirst.getBlockZ() && e.getTo().getZ() <= newSecond.getBlockZ()
-						&& e.getTo().getY() >= newFirst.getBlockY() && e.getTo().getY() <= newSecond.getBlockY()) {
+						&& (e.getTo().getY() >= newFirst.getBlockY() && e.getTo().getY() <= newSecond.getBlockY() || a2.isYIgnored())) {
 					if (!a2.isInArea((OfflinePlayer) p)) {
 						if (a instanceof AreaPermissions) {
 							AreaPermissions Per = (AreaPermissions) a;

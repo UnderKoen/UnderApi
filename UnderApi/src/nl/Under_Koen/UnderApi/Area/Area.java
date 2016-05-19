@@ -11,9 +11,6 @@ import nl.Under_Koen.UnderApi.Config;
 import nl.Under_Koen.UnderApi.Main;
 
 public interface Area {
-
-	// TODO AreaPermisions interface ofz
-
 	Config config = Main.plugin.areaData;
 
 	int getId();
