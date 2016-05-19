@@ -38,7 +38,7 @@ public abstract class ScoreboardManager {
 			name = name.substring(0, 16);
 			setObjective((getScoreboard().registerNewObjective(name, type.getType())));	
 		} else {
-			String name = "$"+type.getCurrency().getName()+"_"+UUID.randomUUID().toString();
+			String name = "$"+type.getCurrency().getId()+"_"+UUID.randomUUID().toString();
 			name = name.substring(0, 16);
 			setObjective((getScoreboard().registerNewObjective(name, "dummy")));
 			for (OfflinePlayer p: Bukkit.getOfflinePlayers()) {

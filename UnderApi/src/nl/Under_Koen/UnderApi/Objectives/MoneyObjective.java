@@ -17,8 +17,8 @@ public class MoneyObjective implements Listener {
 	public void onMoneyUpdate(MoneyUpdateEvent e) {
 		for (Player p: Bukkit.getOnlinePlayers()) {
 			for (Objective o : p.getScoreboard().getObjectives()) {
-				if (o.getName().contains("$"+e.getCurrency().getName())) {
-						o.getScore((OfflinePlayer)e.getPlayer()).setScore((int) UnderApi.getMoney(e.getPlayer(), e.getCurrency()).getMoney());
+				if (o.getName().contains("$"+e.getCurrency().getId())) {
+					o.getScore((OfflinePlayer)e.getPlayer()).setScore((int) UnderApi.getMoney(e.getPlayer(), e.getCurrency()).getMoney());
 				}
 			}
 		}

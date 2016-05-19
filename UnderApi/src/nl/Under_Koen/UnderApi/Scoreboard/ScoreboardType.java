@@ -26,14 +26,18 @@ public enum ScoreboardType {
 	}
 	
 	/**
-	 * only works with MONEY
+	 * @param c The currency of the MONEY objetive
+	 * 
+	 * <h4>only works with MONEY
 	 */
 	public void setCurrency(Currency c) {
 		this.currency = c;
 	}
 	
 	/**
-	 * only works with MONEY
+	 * @return The currency of the MONEY objetive
+	 * 
+	 * <h4>only works with MONEY
 	 */
 	public Currency getCurrency() {
 		return currency;

@@ -12,6 +12,8 @@ import nl.Under_Koen.UnderApi.Main;
 
 public interface Area {
 
+	// TODO AreaPermisions interface ofz
+
 	Config config = Main.plugin.areaData;
 
 	int getId();
@@ -55,7 +57,9 @@ public interface Area {
 	 *            the players to add
 	 */
 	default void addPlayer(OfflinePlayer player) {
-		if (player == null) { return; }
+		if (player == null) {
+			return;
+		}
 		ArrayList<OfflinePlayer> players = getPlayers();
 		players.add(player);
 		setPlayers(players);
@@ -94,7 +98,8 @@ public interface Area {
 	}
 
 	/**
-	 * @param player the player
+	 * @param player
+	 *            the player
 	 * @return true if the player is in area
 	 */
 	default Boolean isInArea(Player player) {

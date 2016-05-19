@@ -91,7 +91,6 @@ public class TabComplete {
 	
 	/**
 	 * @param command the command
-	 * @return 
 	 * @return the subCommands named like:
 	 *   <h1>- 1
 	 *   <h1>- 1.1

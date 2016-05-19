@@ -3,16 +3,17 @@ package nl.Under_Koen.UnderApi.Area;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import nl.Under_Koen.UnderApi.Events.Area.PlayerEnterAreaEvent;
-import nl.Under_Koen.UnderApi.Events.Area.PlayerLeaveAreaEvent;
+import nl.Under_Koen.UnderApi.Main;
+import nl.Under_Koen.UnderApi.Area.AreaPermissions.Type;
 
 public class AreaManager implements Listener {
 
@@ -51,6 +52,7 @@ public class AreaManager implements Listener {
 		return areas;
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
@@ -73,20 +75,109 @@ public class AreaManager implements Listener {
 					newFirst.setZ(second.getBlockZ());
 					newSecond.setZ(first.getBlockZ());
 				}
-				if (p.getLocation().getBlockX() >= newFirst.getBlockX() && p.getLocation().getBlockX() <= newSecond.getBlockX() &&
-						p.getLocation().getBlockZ() >= newFirst.getBlockZ() && p.getLocation().getBlockZ() <= newSecond.getBlockZ() &&
-						p.getLocation().getBlockY() >= newFirst.getBlockY() && p.getLocation().getBlockY() <= newSecond.getBlockY()) {
+				
+				//AreaEnter
+				if (e.getTo().getX() >= newFirst.getBlockX() && e.getTo().getX() <= newSecond.getBlockX()
+						&& e.getTo().getZ() >= newFirst.getBlockZ() && e.getTo().getZ() <= newSecond.getBlockZ()
+						&& e.getTo().getY() >= newFirst.getBlockY() && e.getTo().getY() <= newSecond.getBlockY()) {
 					if (!a2.isInArea((OfflinePlayer) p)) {
+						if (a instanceof AreaPermissions) {
+							AreaPermissions Per = (AreaPermissions) a;
+							if (!Per.hasPermission(p, Type.ENTER_AREA)) {
+								e.setCancelled(true);
+								return;
+							}
+						}
+						if (!a2.onAreaEnter(p)) {
+							e.setCancelled(true);
+							return;
+						}
 						a2.addPlayer(p);
-						PlayerEnterAreaEvent event = new PlayerEnterAreaEvent(p, a);
-						Bukkit.getServer().getPluginManager().callEvent(event);
 					}
+				//AreaLeave
 				} else if (a2.isInArea((OfflinePlayer) p)) {
+					if (a instanceof AreaPermissions) {
+						AreaPermissions Per = (AreaPermissions) a;
+						if (!Per.hasPermission(p, Type.LEAVE_AREA)) {
+							e.setCancelled(true);
+							return;
+						}
+					}
+					if (!a2.onAreaLeave(p)) {
+						e.setCancelled(true);
+						return;
+					}
 					a2.removePlayer(p);
-					PlayerLeaveAreaEvent event = new PlayerLeaveAreaEvent(p, a);
-					Bukkit.getServer().getPluginManager().callEvent(event);
 				}
 			}
+			if (a instanceof AreaPortal) {
+				AreaPortal a2 = (AreaPortal) a;
+				Location first = a2.getFirstPortalCorner();
+				Location second = a2.getSecondPortalCorner();
+				Location newFirst = a2.getFirstPortalCorner();
+				Location newSecond = a2.getSecondPortalCorner();
+				if (first.getBlockX() > second.getBlockX()) {
+					newFirst.setX(second.getBlockX());
+					newSecond.setX(first.getBlockX());
+				}
+				if (first.getBlockY() > second.getBlockY()) {
+					newFirst.setY(second.getBlockY());
+					newSecond.setY(first.getBlockY());
+				}
+				if (first.getBlockZ() > second.getBlockZ()) {
+					newFirst.setZ(second.getBlockZ());
+					newSecond.setZ(first.getBlockZ());
+				}
+				//PortalEnter
+				if (e.getTo().getX() >= newFirst.getBlockX() && e.getTo().getX() <= newSecond.getBlockX()
+						&& e.getTo().getZ() >= newFirst.getBlockZ() && e.getTo().getZ() <= newSecond.getBlockZ()
+						&& e.getTo().getY() >= newFirst.getBlockY() && e.getTo().getY() <= newSecond.getBlockY()) {
+					if (a instanceof AreaPermissions) {
+						AreaPermissions Per = (AreaPermissions) a;
+						if (!Per.hasPermission(p, Type.ENTER_PORTAL)) {
+							e.setCancelled(true);
+							return;
+						}
+					}
+					if (!a2.onAreaPortalEnter(p)) {
+						e.setCancelled(true);
+						return;
+					}
+					//PortalSpawn
+					if (a instanceof AreaPermissions) {
+						AreaPermissions Per = (AreaPermissions) a;
+						if (!Per.hasPermission(p, Type.SPAWN_PORTAL)) {
+							e.setCancelled(true);
+							return;
+						}
+					}
+					BukkitRunnable task = new BukkitRunnable() {
+						@Override
+						public void run() {
+							if (e.getTo().getX() >= newFirst.getX() && e.getTo().getX() <= newSecond.getBlockX()
+									&& e.getTo().getZ() >= newFirst.getZ() && e.getTo().getZ() <= newSecond.getBlockZ()
+									&& e.getTo().getY() >= newFirst.getY()
+									&& e.getTo().getY() <= newSecond.getBlockY()) {
+								if (!a2.onAreaPortalSpawn(p)) {
+									e.setCancelled(true);
+									return;
+								}
+								p.teleport(a2.getPortalSpawn());
+							}
+						}
+					};
+					Main.plugin.getServer().getScheduler().runTaskLater(Main.plugin, task, a2.getPortalTimeOut() * 20l);
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onTp(PlayerTeleportEvent e) {
+		PlayerMoveEvent event = new PlayerMoveEvent(e.getPlayer(), e.getFrom(), e.getTo());
+		onMove(event);
+		if (event.isCancelled()) {
+			e.setCancelled(true);
 		}
 	}
 }

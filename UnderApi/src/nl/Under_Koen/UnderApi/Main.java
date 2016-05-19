@@ -2,14 +2,10 @@ package nl.Under_Koen.UnderApi;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import nl.Under_Koen.UnderApi.Area.AreaManager;
-import nl.Under_Koen.UnderApi.Area.Space;
-import nl.Under_Koen.UnderApi.Events.Area.PlayerEnterAreaEvent;
-import nl.Under_Koen.UnderApi.Events.Area.PlayerLeaveAreaEvent;
 import nl.Under_Koen.UnderApi.Objectives.MoneyObjective;
 import nl.Under_Koen.UnderApi.TabCompletion.TabCompleteHandler;
 
@@ -44,17 +40,6 @@ public class Main extends JavaPlugin implements Listener{
 			c.saveConfig();
 		}
 		TabCompleteHandler.defaultTab();
-		AreaManager.registerArea(new Space());
-	}
-	
-	@EventHandler
-	public void onJoin(PlayerEnterAreaEvent e) {
-		e.getPlayer().sendMessage("join");
-	}
-	
-	@EventHandler
-	public void onLeave(PlayerLeaveAreaEvent e) {
-		e.getPlayer().sendMessage("leave");
 	}
 	
 	@Override
