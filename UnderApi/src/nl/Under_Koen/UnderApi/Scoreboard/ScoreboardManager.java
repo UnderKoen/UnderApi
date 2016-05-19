@@ -9,7 +9,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import nl.Under_Koen.UnderApi.UnderApi;
+import nl.Under_Koen.UnderApi.Objectives.Objectives;
 
 public abstract class ScoreboardManager {
 	
@@ -28,21 +28,51 @@ public abstract class ScoreboardManager {
 		getObjective().setDisplaySlot(displaySlot);
 	}
 	
-	@SuppressWarnings("deprecation")
-	public ScoreboardManager (DisplaySlot displaySlot, ScoreboardType type, Player player) {
+	public ScoreboardManager (DisplaySlot displaySlot, nl.Under_Koen.UnderApi.Objectives.Objective type, Player player) {
 		setDisplaySlot(displaySlot);
 		setPlayer(player);
 		setScoreboard(getPlayer().getScoreboard());
-		if (type != ScoreboardType.MONEY) {
-			String name = UUID.randomUUID().toString();
-			name = name.substring(0, 16);
-			setObjective((getScoreboard().registerNewObjective(name, type.getType())));	
+		String name = UUID.randomUUID().toString();
+		name = name.substring(0, 16);
+		if (type instanceof Objectives) {
+			Objectives types = (Objectives) type;
+			switch (types) {
+			case AIR:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case ARMOR:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case DEATHS:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case DUMMY:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case FOOD:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case HEAL:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case KILLS:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case PLAYERKILLS:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			case XPLEVEL:
+				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
+				break;
+			default:
+				break;
+			}
 		} else {
-			String name = "$"+type.getCurrency().getId()+"_"+UUID.randomUUID().toString();
+			name = type.getPrefixCode()+"-"+type.getSpecialId()+"-"+UUID.randomUUID().toString();
 			name = name.substring(0, 16);
 			setObjective((getScoreboard().registerNewObjective(name, "dummy")));
 			for (OfflinePlayer p: Bukkit.getOfflinePlayers()) {
-				getObjective().getScore(p).setScore((int) UnderApi.getMoney(p, type.getCurrency()).getMoney());
+				getObjective().getScore(p.getName()).setScore(type.getDefaultScore(p));
 			}
 		}
 		getObjective().setDisplaySlot(displaySlot);

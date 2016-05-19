@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import nl.Under_Koen.UnderApi.Area.AreaManager;
-import nl.Under_Koen.UnderApi.Objectives.MoneyObjective;
 import nl.Under_Koen.UnderApi.TabCompletion.TabCompleteHandler;
 
 public class Main extends JavaPlugin implements Listener{
@@ -27,7 +26,6 @@ public class Main extends JavaPlugin implements Listener{
     public void onEnable() {
 		plugin = this;
 		getServer().getPluginManager().registerEvents(this, this);
-		getServer().getPluginManager().registerEvents(new MoneyObjective(), this);
 		getServer().getPluginManager().registerEvents(new AreaManager(), this);
 		for (Config c : configs) {
 			for (Config c2 : defaultConfigs) {

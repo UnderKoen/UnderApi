@@ -8,6 +8,9 @@ public class CurrencyManager {
 	private final static List<Currency> currencys = new ArrayList<>();
 	
 	public static void registerCurrency(Currency currency) {
+		if (currency.getId() == 0) {
+			throw new RuntimeException("Id can't be 0");
+		}
 		for (Currency c : currencys) {
 			if (currency.getId() == c.getId()) {
 				throw new RuntimeException("Can't have the same id");

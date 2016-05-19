@@ -20,6 +20,9 @@ public class AreaManager implements Listener {
 	private final static List<Area> areas = new ArrayList<>();
 
 	public static void registerArea(Area area) {
+		if (area.getId() == 0) {
+			throw new RuntimeException("Id can't be 0");
+		}
 		for (Area a : areas) {
 			if (area.getId() == a.getId()) {
 				throw new RuntimeException("Can't have the same id");

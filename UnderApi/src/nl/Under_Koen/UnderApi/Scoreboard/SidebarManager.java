@@ -4,13 +4,15 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
+import nl.Under_Koen.UnderApi.Objectives.Objective;
+
 public class SidebarManager extends ScoreboardManager {
 
 	public SidebarManager(Player p) {
 		super(DisplaySlot.SIDEBAR, p);
 	}
 	
-	public SidebarManager(ScoreboardType type, Player p) {
+	public SidebarManager(Objective type, Player p) {
 		super(DisplaySlot.SIDEBAR, type, p);
 	}
 	

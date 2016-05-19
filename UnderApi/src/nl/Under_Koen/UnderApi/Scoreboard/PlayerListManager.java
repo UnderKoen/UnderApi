@@ -4,13 +4,15 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
+import nl.Under_Koen.UnderApi.Objectives.Objective;
+
 public class PlayerListManager extends ScoreboardManager {
 
 	public PlayerListManager(Player p) {
 		super(DisplaySlot.PLAYER_LIST, p);
 	}
 	
-	public PlayerListManager(ScoreboardType type, Player p) {
+	public PlayerListManager(Objective type, Player p) {
 		super(DisplaySlot.PLAYER_LIST, type, p);
 	}
 	

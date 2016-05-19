@@ -1,26 +1,34 @@
 package nl.Under_Koen.UnderApi.Objectives;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.scoreboard.Objective;
 
 import nl.Under_Koen.UnderApi.UnderApi;
 import nl.Under_Koen.UnderApi.Events.Money.MoneyUpdateEvent;
+import nl.Under_Koen.UnderApi.Money.Currency;
 
-public class MoneyObjective implements Listener {
+public class MoneyObjective implements Listener, Objective {
 
-	@SuppressWarnings("deprecation")
+	Currency c;
+	
+	MoneyObjective(Currency currency) {
+		c = currency;
+	}
+	
 	@EventHandler
 	public void onMoneyUpdate(MoneyUpdateEvent e) {
-		for (Player p: Bukkit.getOnlinePlayers()) {
-			for (Objective o : p.getScoreboard().getObjectives()) {
-				if (o.getName().contains("$"+e.getCurrency().getId())) {
-					o.getScore((OfflinePlayer)e.getPlayer()).setScore((int) UnderApi.getMoney(e.getPlayer(), e.getCurrency()).getMoney());
-				}
-			}
+		if (c.getId() == e.getCurrency().getId()) {
+			update(e.getPlayer(), (int) UnderApi.getMoney(e.getPlayer(), e.getCurrency()).getMoney(), getFormatterString());
 		}
 	}
+	
+	@Override
+	public int getSpecialId() {
+		return c.getId();
+	};
+	
+	@Override
+	public String getPrefixCode() {
+		return "$-$";
+	};
 }
