@@ -2,11 +2,17 @@ package nl.Under_Koen.UnderApi;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import nl.Under_Koen.UnderApi.Area.AreaManager;
+import nl.Under_Koen.UnderApi.Money.CurrencyManager;
+import nl.Under_Koen.UnderApi.Objectives.*;
+import nl.Under_Koen.UnderApi.Scoreboard.SidebarManager;
 import nl.Under_Koen.UnderApi.TabCompletion.TabCompleteHandler;
+import nl.Under_Koen.UnderApi.Test.CurrencyTest;
+import nl.Under_Koen.UnderApi.Test.Teleport;
 
 public class Main extends JavaPlugin implements Listener{
 	
@@ -38,6 +44,7 @@ public class Main extends JavaPlugin implements Listener{
 			c.saveConfig();
 		}
 		TabCompleteHandler.defaultTab();
+		CurrencyManager.registerCurrency(new CurrencyTest());
 	}
 	
 	@Override
@@ -46,13 +53,26 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
-		if (label.equalsIgnoreCase("Test")) {
-		}
-		if (label.equalsIgnoreCase("Test2")) {
-		}
-		if (label.equalsIgnoreCase("Test3")) {
-		}
-		if (label.equalsIgnoreCase("Test4")) {
+		if (s instanceof Player) {
+			Player p = (Player) s;
+			if (label.equalsIgnoreCase("Test")) {
+				MoneyObjective ob = new MoneyObjective(CurrencyManager.getCurrency(666));
+				ObjectiveManager.registerObjective(ob);
+				SidebarManager sb = new SidebarManager(ob, p);
+				sb.setDisplayName("MONEYS");
+			}
+			if (label.equalsIgnoreCase("Test2")) {
+				UnderApi.getMoney(p, CurrencyManager.getCurrency(666)).addMoney(10);
+			}
+			if (label.equalsIgnoreCase("Test3")) {
+				Teleport ob = new Teleport();
+				ObjectiveManager.registerObjective(ob);
+				SidebarManager sb = new SidebarManager(ob, p);
+				sb.setDisplayName("tp");
+			}
+			if (label.equalsIgnoreCase("Test4")) {
+				UnderApi.getMoney(p, CurrencyManager.getCurrency(666)).setMoney(1090);
+			}
 		}
 		return false;
 	}

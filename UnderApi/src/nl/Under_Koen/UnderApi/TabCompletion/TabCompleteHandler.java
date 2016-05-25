@@ -8,15 +8,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 
+import nl.Under_Koen.UnderApi.Config;
 import nl.Under_Koen.UnderApi.Main;
 
 public class TabCompleteHandler implements TabCompleter{
 
+	private static Config config = Main.plugin.tabCompleteCommands;
+	
 	@Override
 	public List<String> onTabComplete(CommandSender s, Command cmd, String alias, String[] args) {
-		ConfigurationSection commands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands");
+		ConfigurationSection commands = config.getConfig().getConfigurationSection("Commands");
 		for (String cmdName : commands.getKeys(false)) {
-			ConfigurationSection subcommands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands."+cmdName);
+			ConfigurationSection subcommands = config.getConfig().getConfigurationSection("Commands."+cmdName);
 			if (cmd.getLabel().equalsIgnoreCase(cmdName)) {
 				String beforeArg = null;
 				if (!(args.length <= 1)) {
@@ -36,11 +39,11 @@ public class TabCompleteHandler implements TabCompleter{
 							path = path + "." + arg;
 						}
 					}
-					if (Main.plugin.tabCompleteCommands.getConfig().contains(subcommands.getCurrentPath() + path)) {
-						if (Main.plugin.tabCompleteCommands.getConfig().getBoolean(subcommands.getCurrentPath() + path)) {
+					if (config.getConfig().contains(subcommands.getCurrentPath() + path)) {
+						if (config.getConfig().getBoolean(subcommands.getCurrentPath() + path)) {
 							return null;
 						}
-						subcommands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection(subcommands.getCurrentPath() + path);
+						subcommands = config.getConfig().getConfigurationSection(subcommands.getCurrentPath() + path);
 						List<String> list = new ArrayList<>();
 						for (String subCommands : subcommands.getKeys(false)) {
 							list.add(subCommands);
@@ -53,8 +56,8 @@ public class TabCompleteHandler implements TabCompleter{
 		return null;
 	}
 	public static void defaultTab () {
-		if (Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands") != null ) {
-			for (String s : Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands").getKeys(false)) {
+		if (config.getConfig().getConfigurationSection("Commands") != null ) {
+			for (String s : config.getConfig().getConfigurationSection("Commands").getKeys(false)) {
 				Main.plugin.getCommand(s).setTabCompleter(new TabCompleteHandler());
 			}
 		}

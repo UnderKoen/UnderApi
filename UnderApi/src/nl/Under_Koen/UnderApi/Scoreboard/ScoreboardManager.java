@@ -21,61 +21,35 @@ public abstract class ScoreboardManager {
 	public ScoreboardManager (DisplaySlot displaySlot, Player player) {
 		setDisplaySlot(displaySlot);
 		setPlayer(player);
-		setScoreboard(getPlayer().getScoreboard());
+		setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		String name = UUID.randomUUID().toString();
 		name = name.substring(0, 16);
 		setObjective(getScoreboard().registerNewObjective(name, "dummy"));
 		getObjective().setDisplaySlot(displaySlot);
+		player.setScoreboard(getScoreboard());
 	}
 	
 	public ScoreboardManager (DisplaySlot displaySlot, nl.Under_Koen.UnderApi.Objectives.Objective type, Player player) {
+		if (!type.isRegistered()) {
+			throw new RuntimeException(type.getName() + " need to be registered");
+		}
 		setDisplaySlot(displaySlot);
 		setPlayer(player);
-		setScoreboard(getPlayer().getScoreboard());
+		setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		String name = UUID.randomUUID().toString();
 		name = name.substring(0, 16);
 		if (type instanceof Objectives) {
-			Objectives types = (Objectives) type;
-			switch (types) {
-			case AIR:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case ARMOR:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case DEATHS:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case DUMMY:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case FOOD:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case HEAL:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case KILLS:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case PLAYERKILLS:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			case XPLEVEL:
-				setObjective((getScoreboard().registerNewObjective(name, type.getType())));
-				break;
-			default:
-				break;
-			}
+			setObjective((getScoreboard().registerNewObjective(name, type.getType())));
 		} else {
-			name = type.getPrefixCode()+"-"+type.getSpecialId()+"-"+UUID.randomUUID().toString();
+			name = type.getName()+"-"+type.getSpecialId()+"-"+UUID.randomUUID().toString();
 			name = name.substring(0, 16);
-			setObjective((getScoreboard().registerNewObjective(name, "dummy")));
+			setObjective((getScoreboard().registerNewObjective(name, type.getType())));
 			for (OfflinePlayer p: Bukkit.getOfflinePlayers()) {
 				getObjective().getScore(p.getName()).setScore(type.getDefaultScore(p));
 			}
 		}
 		getObjective().setDisplaySlot(displaySlot);
+		player.setScoreboard(getScoreboard());
 	}
 
 	/**

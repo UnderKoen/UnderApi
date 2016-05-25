@@ -55,4 +55,13 @@ public enum Objectives implements Objective {
 			return "armor";
 		}
 	};
+	
+	@Override
+	public void register() {
+	}
+
+	@Override
+	public boolean isRegistered() {
+		return true;
+	}
 }

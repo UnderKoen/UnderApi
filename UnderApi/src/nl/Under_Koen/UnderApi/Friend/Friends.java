@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import nl.Under_Koen.UnderApi.Config;
 import nl.Under_Koen.UnderApi.Main;
 
 public class Friends {
+	
+	private Config config = Main.plugin.areaData;
+	
 	private Player player;
 	private ArrayList<OfflinePlayer> friends;
 	private ArrayList<String> friendsUUID;
@@ -56,15 +60,15 @@ public class Friends {
 		this.friends = friends;
 		this.friendsUUID = new ArrayList<String>();
 		if (friends == null || friends.isEmpty()) {
-			Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
-			Main.plugin.friendData.saveConfig();
+			config.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+			config.saveConfig();
 			return;
 		}
 		for (OfflinePlayer p:friends) {
 			friendsUUID.add(p.getUniqueId().toString());
 		}
-		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
-		Main.plugin.friendData.saveConfig();
+		config.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		config.saveConfig();
 	}
 	
 	/**
@@ -73,8 +77,8 @@ public class Friends {
 	public void addFriend(OfflinePlayer friend) {
 		friends.add(friend);
 		friendsUUID.add(friend.getUniqueId().toString());
-		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
-		Main.plugin.friendData.saveConfig();
+		config.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		config.saveConfig();
 	}
 	
 	/**
@@ -83,8 +87,8 @@ public class Friends {
 	public void addFriend(Player friend) {
 		friends.add((OfflinePlayer) friend);
 		friendsUUID.add(friend.getUniqueId().toString());
-		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
-		Main.plugin.friendData.saveConfig();
+		config.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		config.saveConfig();
 	}
 	
 	/**
@@ -93,8 +97,8 @@ public class Friends {
 	public void removeFriend(OfflinePlayer friend) {
 		friends.remove(friend);
 		friendsUUID.remove(friend.getUniqueId().toString());
-		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
-		Main.plugin.friendData.saveConfig();
+		config.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		config.saveConfig();
 	}
 	
 	/**
@@ -103,8 +107,8 @@ public class Friends {
 	public void removeFriend(Player friend) {
 		friends.remove((OfflinePlayer) friend);
 		friendsUUID.remove(friend.getUniqueId().toString());
-		Main.plugin.friendData.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
-		Main.plugin.friendData.saveConfig();
+		config.getConfig().set(player.getUniqueId()+".Friends", friendsUUID);
+		config.saveConfig();
 	}
 	
 	/**

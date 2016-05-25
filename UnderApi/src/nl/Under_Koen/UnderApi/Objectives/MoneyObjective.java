@@ -1,5 +1,6 @@
 package nl.Under_Koen.UnderApi.Objectives;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -11,14 +12,14 @@ public class MoneyObjective implements Listener, Objective {
 
 	Currency c;
 	
-	MoneyObjective(Currency currency) {
+	public MoneyObjective(Currency currency) {
 		c = currency;
 	}
 	
 	@EventHandler
 	public void onMoneyUpdate(MoneyUpdateEvent e) {
 		if (c.getId() == e.getCurrency().getId()) {
-			update(e.getPlayer(), (int) UnderApi.getMoney(e.getPlayer(), e.getCurrency()).getMoney(), getFormatterString());
+			update(e.getPlayer(), (int) UnderApi.getMoney(e.getPlayer(), e.getCurrency()).getMoney());
 		}
 	}
 	
@@ -28,7 +29,24 @@ public class MoneyObjective implements Listener, Objective {
 	};
 	
 	@Override
-	public String getPrefixCode() {
+	public String getName() {
 		return "$-$";
+	}
+	
+	@Override
+	public int getDefaultScore(OfflinePlayer p) {
+		return (int) UnderApi.getMoney(p, c).getMoney();
+	}
+
+	private boolean registered = false;
+	
+	@Override
+	public void register() {
+		registered = true;
+	}
+
+	@Override
+	public boolean isRegistered() {
+		return registered;
 	};
 }

@@ -43,16 +43,15 @@ public class UnderApi {
 		Objective ob = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
 		FakeSidebarManager sm = new FakeSidebarManager(p);
 		if (ob != null) {
-			for (String name : p.getScoreboard().getEntries()) {
-				if (ob.getScore(name).getScore() != 0) {
-					for(int i=0 ; i > 9 ; i++) {
-						if (name.contains("§"+i+"§r")) {
-							name = name.replace("§"+i+"§r", "");
-							break;
-						}
+			for (String name : ob.getScoreboard().getEntries()) {
+				Bukkit.broadcastMessage(name);
+				for(int i=0 ; i > 9 ; i++) {
+					if (name.contains("§"+i+"§r")) {
+						name = name.replace("§"+i+"§r", "");
+						break;
 					}
-					sm.setLine(-ob.getScore(name).getScore(), name);
 				}
+				sm.setLine(-ob.getScore(name).getScore(), name);
 			}
 			sm.setDisplayName(ob.getDisplayName());
 		}

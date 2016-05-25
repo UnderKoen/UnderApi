@@ -3,6 +3,7 @@ package nl.Under_Koen.UnderApi.Money;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
+import nl.Under_Koen.UnderApi.Config;
 import nl.Under_Koen.UnderApi.Main;
 import nl.Under_Koen.UnderApi.UnderApi;
 import nl.Under_Koen.UnderApi.Events.Money.MoneyAddEvent;
@@ -14,13 +15,15 @@ import nl.Under_Koen.UnderApi.Events.Money.MoneyUpdateEvent;
 
 public class Money {
 	
+	Config config = Main.plugin.moneyData;
+	
 	public Money (OfflinePlayer player, Currency currency) {
 		setPlayer(player);
 		setCurrency(currency);
-		double money = Main.plugin.moneyData.getConfig().getDouble(pathMoney());
+		double money = config.getConfig().getDouble(pathMoney());
 		this.money = money;
-		Main.plugin.moneyData.getConfig().set(pathMoney(), money);
-		Main.plugin.moneyData.saveConfig();
+		config.getConfig().set(pathMoney(), money);
+		config.saveConfig();
 	}
 	
 	public OfflinePlayer player;
@@ -74,7 +77,7 @@ public class Money {
 		if (player2 == getPlayer()) {
 			throw new RuntimeException("Can't pay yourself");
 		}
-		double currentP = Main.plugin.moneyData.getConfig().getDouble(pathMoney());
+		double currentP = config.getConfig().getDouble(pathMoney());
 		double currentP2 = UnderApi.getMoney(player2, getCurrency()).getMoney();
 		double newMoneyP = currentP - payment;
 		double newMoneyP2 = currentP2 + payment;
@@ -94,8 +97,8 @@ public class Money {
 	
 	private void saveMoney(Double money) {
 		this.money = money;
-		Main.plugin.moneyData.getConfig().set(pathMoney(), money);
-		Main.plugin.moneyData.saveConfig();
+		config.getConfig().set(pathMoney(), money);
+		config.saveConfig();
 		MoneyUpdateEvent event = new MoneyUpdateEvent(getPlayer(), getCurrency());
 		Bukkit.getServer().getPluginManager().callEvent(event);
 	}

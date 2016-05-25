@@ -22,8 +22,8 @@ public interface Currency {
 	};
 	
 	default void setMaxMoney(long max) {
-		Main.plugin.moneyConfig.getConfig().set(pathMaxMoney(), NumberFormat.getIntegerInstance().format(max).replace(".", ""));
-		Main.plugin.moneyConfig.saveConfig();
+		config.getConfig().set(pathMaxMoney(), NumberFormat.getIntegerInstance().format(max).replace(".", ""));
+		config.saveConfig();
 	}
 	
 	default String pathMinMoney() {
@@ -35,8 +35,8 @@ public interface Currency {
 	}
 	
 	default void setMinMoney(long min) {
-		Main.plugin.moneyConfig.getConfig().set(pathMinMoney(), NumberFormat.getIntegerInstance().format(min).replace(".", ""));
-		Main.plugin.moneyConfig.saveConfig();
+		config.getConfig().set(pathMinMoney(), NumberFormat.getIntegerInstance().format(min).replace(".", ""));
+		config.saveConfig();
 	}
 	
 	default String pathCurrencySymbol() {
@@ -48,8 +48,8 @@ public interface Currency {
 	}
 	
 	default void setCurrencySymbol(String currencySymbol) {
-		Main.plugin.moneyConfig.getConfig().set(pathCurrencySymbol(), currencySymbol);
-		Main.plugin.moneyConfig.saveConfig();
+		config.getConfig().set(pathCurrencySymbol(), currencySymbol);
+		config.saveConfig();
 	}
 	
 	/**

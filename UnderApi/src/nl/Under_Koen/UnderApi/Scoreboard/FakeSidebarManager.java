@@ -62,12 +62,14 @@ public class FakeSidebarManager extends ScoreboardManager {
 			available = lines.size()+1;
 		}
 		setLine(available, text);
+		getPlayer().setScoreboard(getScoreboard());
 	}
 	
 	public void removeLine(int line) {
 		if (lines.containsKey(line)) {
 			getScoreboard().resetScores(lines.get(line));
 			lines.remove(line);
+			getPlayer().setScoreboard(getScoreboard());
 		}
 	}
 	

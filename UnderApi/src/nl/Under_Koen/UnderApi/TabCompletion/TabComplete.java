@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import org.bukkit.configuration.ConfigurationSection;
 
+import nl.Under_Koen.UnderApi.Config;
 import nl.Under_Koen.UnderApi.Main;
 
 public class TabComplete {
 
+	private static Config config = Main.plugin.tabCompleteCommands;
+	
 	/**
 	 * @param command the main command
 	 * @param subCommands :
@@ -23,8 +26,8 @@ public class TabComplete {
 	 */
 	public static void addSubCommands(String command, String[] subCommands) {
 		for (String s: subCommands) {
-			Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+s, true);
-			Main.plugin.tabCompleteCommands.saveConfig();
+			config.getConfig().set("Commands."+command+"."+s, true);
+			config.saveConfig();
 		}
 	}
 	
@@ -42,8 +45,8 @@ public class TabComplete {
 	 *   <h2>you don't need to add 1 because 1.2.3 is already there
 	 */
 	public static void addSubCommand(String command, String subCommand) {
-		Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+subCommand, true);
-		Main.plugin.tabCompleteCommands.saveConfig();
+		config.getConfig().set("Commands."+command+"."+subCommand, true);
+		config.saveConfig();
 	}
 	
 	/**
@@ -60,8 +63,8 @@ public class TabComplete {
 	 *  <h2>if you do 1 as subCommand then will 1.2.3 and 1.2.1 also remove
 	 */
 	public static void removeSubCommand(String command, String subCommand) {
-		Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+subCommand, null);
-		Main.plugin.tabCompleteCommands.saveConfig();
+		config.getConfig().set("Commands."+command+"."+subCommand, null);
+		config.saveConfig();
 	}
 	
 	/**
@@ -79,14 +82,14 @@ public class TabComplete {
 	 */
 	public static void removeSubCommands(String command, String[] subCommands) {
 		for (String s : subCommands) {
-			Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command+"."+s, null);
+			config.getConfig().set("Commands."+command+"."+s, null);
 		}
-		Main.plugin.tabCompleteCommands.saveConfig();
+		config.saveConfig();
 	}
 	
 	public static void removeCommand(String command) {
-		Main.plugin.tabCompleteCommands.getConfig().set("Commands."+command, null);
-		Main.plugin.tabCompleteCommands.saveConfig();
+		config.getConfig().set("Commands."+command, null);
+		config.saveConfig();
 	}
 	
 	/**
@@ -99,7 +102,7 @@ public class TabComplete {
 	 *   <h1>- 1.2.1
 	 */
 	public static ArrayList<String> getSubCommands(String command) {
-		ConfigurationSection commands = Main.plugin.tabCompleteCommands.getConfig().getConfigurationSection("Commands."+command);
+		ConfigurationSection commands = config.getConfig().getConfigurationSection("Commands."+command);
 		ArrayList<String> newList = new ArrayList<String>();
 		for (String s : commands.getKeys(true)) {
 			newList.add(s);
