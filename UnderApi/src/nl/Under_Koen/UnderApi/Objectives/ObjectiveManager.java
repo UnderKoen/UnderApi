@@ -19,6 +19,16 @@ public class ObjectiveManager {
 	 * If your Objective implements Listener than it will registerEvents
 	 */
 	public static void registerObjective (Objective o) {
+		if (o instanceof Objectives) {
+			o.register();
+			return;
+		}
+		for (Objective o2: objectives) {
+			if (o2.getFormatterString().contains(o.getFormatterString())) {
+				o.register();
+				return;
+			}
+		}
 		objectives.add(o);
 		if (o instanceof Listener) {
 			Listener listener = (Listener) o;
