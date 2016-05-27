@@ -4,6 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * IT NEED TO HAVE A CONSTRUCTOR WITH A INT ARG FOR SPECIAL ID
+ */
 public interface Objective {
 	
 	default public void updateAdd (Player player, int addScore) {
@@ -48,9 +51,7 @@ public interface Objective {
 		return "dummy";
 	}
 	
-	default public int getSpecialId() {
-		return 0;
-	}
+	public int getSpecialId();
 	
 	default public int getDefaultScore(OfflinePlayer p) {
 		return 0;
