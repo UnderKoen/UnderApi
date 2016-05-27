@@ -55,9 +55,9 @@ public class Main extends JavaPlugin implements Listener{
 				Class<?> objectiveClass = (Class<?>) Class.forName(classPath);
 				int id = Integer.parseInt(idInt);
 				Object objective = objectiveClass.getDeclaredConstructor(int.class).newInstance(id);
-				if (objective instanceof Listener) {
-					Listener objective2 = (Listener) objective;
-					getServer().getPluginManager().registerEvents(objective2, this);
+				if (objective instanceof Objective) {
+					Objective objective2 = (Objective) objective;
+					ObjectiveManager.registerObjective(objective2);
 				}
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
@@ -70,12 +70,14 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
-		if (label.equalsIgnoreCase("Test")) {
-			MoneyObjective ob = new MoneyObjective(CurrencyManager.getCurrency(666));
-			ObjectiveManager.registerObjective(ob);
-		}
 		if (s instanceof Player) {
 			Player p = (Player) s;
+			if (label.equalsIgnoreCase("Test")) {
+				MoneyObjective ob = new MoneyObjective(CurrencyManager.getCurrency(666));
+				ObjectiveManager.registerObjective(ob);
+				SidebarManager sb = new SidebarManager(ob, p);
+				sb.setDisplayName("money");
+			}
 			if (label.equalsIgnoreCase("Test2")) {
 				UnderApi.getMoney(p, CurrencyManager.getCurrency(666)).addMoney(10);
 			}
