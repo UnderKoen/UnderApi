@@ -58,7 +58,6 @@ public enum Objectives implements Objective {
 	
 	@Override
 	public int getSpecialId() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

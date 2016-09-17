@@ -4,7 +4,7 @@
 
 name: UnderApi
 main: nl.Under_Koen.UnderApi.Main
-version: alpha.0.2
+version: alpha.0.3
 commands:
   test:
   test2:

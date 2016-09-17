@@ -4,16 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import nl.Under_Koen.UnderApi.Area.*;
-import nl.Under_Koen.UnderApi.Money.*;
 import nl.Under_Koen.UnderApi.Objectives.*;
-import nl.Under_Koen.UnderApi.Scoreboard.*;
 import nl.Under_Koen.UnderApi.TabCompletion.*;
-import nl.Under_Koen.UnderApi.Test.*;
 
 public class Main extends JavaPlugin implements Listener{
 	
@@ -45,8 +41,8 @@ public class Main extends JavaPlugin implements Listener{
 			c.getConfig();
 			c.saveConfig();
 		}
+		TabComplete.addSubCommand("Test", "Test");
 		TabCompleteHandler.defaultTab();
-		CurrencyManager.registerCurrency(new CurrencyTest());
 		for (String className: objectiveData.getConfig().getStringList("list")) {
 			try {
 				String[] strings = className.split(":");
@@ -70,7 +66,7 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	
 	public boolean onCommand(CommandSender s, Command cmd,String label, String[] args) {
-		if (s instanceof Player) {
+		/*if (s instanceof Player) {
 			Player p = (Player) s;
 			if (label.equalsIgnoreCase("Test")) {
 				MoneyObjective ob = new MoneyObjective(CurrencyManager.getCurrency(666));
@@ -90,7 +86,7 @@ public class Main extends JavaPlugin implements Listener{
 			if (label.equalsIgnoreCase("Test4")) {
 				UnderApi.getMoney(p, CurrencyManager.getCurrency(666)).setMoney(1090);
 			}
-		}
+		}*/
 		return false;
 	}
 }
